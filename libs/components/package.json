@@ -1,0 +1,28 @@
+{
+  "name": "@ng-tw-kit/components",
+  "version": "0.0.1",
+  "description": "Angular components built with Tailwind CSS",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GustavoHTogashi/ng-tw-kit.git"
+  },
+  "keywords": [
+    "angular",
+    "tailwind",
+    "components",
+    "ui",
+    "library"
+  ],
+  "author": "Gustavo Togashi",
+  "peerDependencies": {
+    "@angular/common": ">=18",
+    "@angular/core": ">=18",
+    "vite": "^6.0.0",
+    "@analogjs/vite-plugin-angular": "~1.14.1",
+    "@nx/vite": "21.1.0"
+  },
+  "sideEffects": false
+}
