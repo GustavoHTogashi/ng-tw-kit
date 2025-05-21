@@ -1,0 +1,13 @@
+# Auto detect text files and perform AUTO line endings
+*.txt eol=lf
+
+# Force the following file types to use LF line endings
+*.md eol=lf
+*.json eol=lf
+*.yml eol=lf
+*.yaml eol=lf
+*.sh eol=lf
+*.js eol=lf
+*.ts eol=lf
+*.css eol=lf
+*.html eol=lf
