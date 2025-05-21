@@ -1,13 +1,9 @@
 {
   "name": "@ng-tw-kit/components",
-  "version": "0.0.1-alpha.3",
+  "version": "0.0.1-alpha.4",
   "description": "Angular components built with Tailwind CSS",
   "publishConfig": {
     "access": "public"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/GustavoHTogashi/ng-tw-kit.git"
   },
   "keywords": [
     "angular",
