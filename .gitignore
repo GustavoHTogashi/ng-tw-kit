@@ -1,32 +1,49 @@
-# Ignore node_modules directory
-node_modules/
+# See https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
 
-# Ignore log files
-*.log
+# compiled output
+dist
+tmp
+out-tsc
 
-# Ignore environment files
-.env
+# dependencies
+node_modules
 
-# Ignore build directories
-dist/
-build/
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
 
-# Ignore temporary files
-*.tmp
-*.swp
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
 
-# Ignore IDE specific files
-.vscode/
-.idea/
+# misc
+/.sass-cache
+/connect.lock
+/coverage
+/libpeerconnection.log
+npm-debug.log
+yarn-error.log
+testem.log
+/typings
 
-# Ignore OS generated files
+# System Files
 .DS_Store
 Thumbs.db
 
-# Ignore Angular specific files
-.angular/
-.angular-cache/
-*.ngfactory.ts
-*.ngsummary.json
-*.ngstyle.ts
-*.ngtypecheck.ts
+.nx/cache
+.nx/workspace-data
+.cursor/rules/nx-rules.mdc
+.github/instructions/nx.instructions.md
+
+.angular
+
+vite.config.*.timestamp*
+vitest.config.*.timestamp*
