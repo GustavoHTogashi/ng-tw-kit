@@ -2,7 +2,9 @@
   "name": "@nx-tw-kit/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "publish:components": "npx nx build components && cd ./libs/components/ && npm publish && cd ..."
+  },
   "private": true,
   "dependencies": {
     "@angular/common": "~19.2.0",

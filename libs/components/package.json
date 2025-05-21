@@ -1,6 +1,6 @@
 {
   "name": "@ng-tw-kit/components",
-  "version": "0.0.1-alpha.0",
+  "version": "0.0.1-alpha.1",
   "description": "Angular components built with Tailwind CSS",
   "publishConfig": {
     "access": "public"
