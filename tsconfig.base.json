@@ -1,0 +1,25 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2020", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@ngtw-kit/common": ["libs/common/src/index.ts"],
+      "@ngtw-kit/components": ["libs/components/src/index.ts"],
+      "@ngtw-kit/directives": ["libs/directives/src/index.ts"],
+      "@ngtw-kit/utils": ["libs/utils/src/index.ts"],
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}

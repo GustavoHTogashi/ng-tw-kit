@@ -1,0 +1,12 @@
+{
+  "name": "@ngtw-kit/components",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/core": ">=20",
+    "@angular/common": ">=20",
+    "vite": ">=6",
+    "@analogjs/vite-plugin-angular": ">=1",
+    "@nx/vite": ">=21"
+  },
+  "sideEffects": false
+}
