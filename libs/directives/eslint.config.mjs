@@ -40,6 +40,7 @@ export default [
           style: 'kebab-case',
         },
       ],
+      "@angular-eslint/no-input-rename": 'off',
     },
   },
   {

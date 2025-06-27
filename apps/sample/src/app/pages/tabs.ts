@@ -20,7 +20,9 @@ import { Page } from '../components/page';
       <div ngtwTabs>
         <div ngtwTabsHeader>
           @for (tabOption of tabsOptions(); track $index) {
-            <button ngtwTab [option]="tabOption">{{ tabOption.title }}</button>
+            <button ngtwTab [ngtwTabOption]="tabOption">
+              {{ tabOption.title }}
+            </button>
           }
         </div>
         <ng-template ngtwTabsContent />

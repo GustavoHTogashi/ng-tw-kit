@@ -1,9 +1,12 @@
-![ngtw-kit logo](logo.png)
+<br/>
+
+<img src="./apps/sample/public/images/logo-horizontal-gradient.png" alt="logo" width="240px">
+
+<br/>
 
 # Fast Development · Faster Prototyping
 
 An UI Kit built for Angular with styles provided by tailwindcss, helping you deliver UX friendly and Acessible web interfaces
-
 
 # Packages
 

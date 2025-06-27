@@ -33,7 +33,9 @@ export class NgtwTabsContent implements AfterViewInit {
   viewContainerRef = inject(ViewContainerRef);
   document = inject(DOCUMENT);
 
-  content = model<TemplateRef<unknown> | Type<unknown> | string>('');
+  content = model<TemplateRef<unknown> | Type<unknown> | string>('', {
+    alias: 'ngtwContent',
+  });
 
   element = this._elementRef.nativeElement;
   contentElement = this.document.createElement('p');

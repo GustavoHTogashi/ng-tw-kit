@@ -26,10 +26,9 @@ export class NgtwTabsHeader implements AfterViewInit {
   element = inject<HTMLElementRef>(ElementRef).nativeElement;
   document = inject(DOCUMENT);
 
-  selectedTab = model<NgtwTabOption | null>(null);
+  selectedTab = model<NgtwTabOption | null>(null, { alias: 'ngtwSelectedTab' });
 
   childrenTab = contentChildren(NgtwTab);
-  // childTabIndicator = contentChild(NgtwTabIndicator);
 
   childTabIndicator = this.document.createElement('span');
 

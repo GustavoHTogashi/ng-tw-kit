@@ -33,7 +33,9 @@ export class NgtwTab {
 
   element = inject<ButtonRef>(ElementRef).nativeElement;
 
-  option = input.required<NgtwTabOption>();
+  option = input.required<NgtwTabOption>({
+    alias: 'ngtwTabOption',
+  });
 
   selected = output<void>();
 
