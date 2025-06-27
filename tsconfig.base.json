@@ -10,15 +10,21 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "lib": ["es2020", "dom"],
+    "lib": ["es2022", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@ngtw-kit/common": ["libs/common/src/index.ts"],
+      "@ngtw-kit/common/tokens": ["libs/common/tokens/src/index.ts"],
+      "@ngtw-kit/common/types": ["libs/common/types/src/index.ts"],
       "@ngtw-kit/components": ["libs/components/src/index.ts"],
-      "@ngtw-kit/directives": ["libs/directives/src/index.ts"],
-      "@ngtw-kit/utils": ["libs/utils/src/index.ts"],
+      "@ngtw-kit/directives/button": ["libs/directives/button/src/index.ts"],
+      "@ngtw-kit/directives/input": ["libs/directives/input/src/index.ts"],
+      "@ngtw-kit/directives/switch": ["libs/directives/switch/src/index.ts"],
+      "@ngtw-kit/directives/tabs": ["libs/directives/tabs/src/index.ts"],
+      "@ngtw-kit/utils/memoize": ["libs/utils/memoize/src/index.ts"],
+      "@ngtw-kit/utils/router": ["libs/utils/router/src/index.ts"],
+      "@ngtw-kit/utils/string": ["libs/utils/string/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

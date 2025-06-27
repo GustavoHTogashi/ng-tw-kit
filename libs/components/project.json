@@ -24,7 +24,20 @@
           "tsConfig": "libs/components/tsconfig.lib.prod.json"
         },
         "development": {
-          "tsConfig": "libs/components/tsconfig.lib.json"
+          "tsConfig": "libs/components/tsconfig.lib.json",
+          "watch": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "tailwind": {
+      "command": "npx @tailwindcss/cli -i {projectRoot}/styles/input.css -o {projectRoot}/styles/components.css",
+      "configurations": {
+        "production": {
+          "args": ["--minify"]
+        },
+        "development": {
+          "args": ["--watch"]
         }
       },
       "defaultConfiguration": "production"
