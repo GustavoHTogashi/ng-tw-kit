@@ -20,6 +20,9 @@
       "@ngtw-kit/components": ["libs/components/src/index.ts"],
       "@ngtw-kit/directives/button": ["libs/directives/button/src/index.ts"],
       "@ngtw-kit/directives/input": ["libs/directives/input/src/index.ts"],
+      "@ngtw-kit/directives/progress": [
+        "libs/directives/progress/src/index.ts"
+      ],
       "@ngtw-kit/directives/switch": ["libs/directives/switch/src/index.ts"],
       "@ngtw-kit/directives/tabs": ["libs/directives/tabs/src/index.ts"],
       "@ngtw-kit/utils/memoize": ["libs/utils/memoize/src/index.ts"],

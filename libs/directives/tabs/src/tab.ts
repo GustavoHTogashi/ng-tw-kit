@@ -27,7 +27,7 @@ export type NgtwTabOption = {
   selector: 'button[ngtwTab]',
 })
 export class NgtwTab {
-  protected hostClasses = signal(
+  protected readonly hostClasses = signal(
     'cursor-pointer overflow-hidden rounded-none bg-transparent p-2 text-current outline-transparent transition-[background-color,_outline,_opacity] select-none hover:bg-zinc-800 focus:-outline-offset-2 focus-visible:outline-2 focus-visible:outline-purple-500 disabled:pointer-events-none disabled:opacity-25',
   );
 

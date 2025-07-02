@@ -61,7 +61,7 @@ export class App {
 
   protected sidemenuItems = this._router.config
     .filter(({ path }) => {
-      return path && path !== 'home' && path !== '**';
+      return path && path !== 'home' && path !== '**' && path !== 'test';
     })
     .map((route) => {
       if (isString(route.title)) {

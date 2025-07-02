@@ -27,7 +27,7 @@
           "tsConfig": "libs/common/tsconfig.lib.json"
         }
       },
-      "defaultConfiguration": "production"
+      "defaultConfiguration": "development"
     },
     "nx-release-publish": {
       "options": {

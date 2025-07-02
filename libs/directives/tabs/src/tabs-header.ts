@@ -19,7 +19,7 @@ import { NgtwTab, NgtwTabOption } from './tab';
   selector: '[ngtwTabsHeader]',
 })
 export class NgtwTabsHeader implements AfterViewInit {
-  protected hostClasses = signal(
+  protected readonly hostClasses = signal(
     'relative flex flex-row border-b-2 border-b-zinc-800 pb-4',
   );
 
@@ -44,20 +44,20 @@ export class NgtwTabsHeader implements AfterViewInit {
 
   private _changeTabIndicator(tab: NgtwTab) {
     const { offsetLeft, offsetWidth } = tab.element;
-    const translateAmount = offsetLeft + offsetWidth;
     this.childTabIndicator.style.width = `${offsetWidth}px`;
-    this.childTabIndicator.style.transform = `translateX(${translateAmount}px)`;
+    this.childTabIndicator.style.transform = `translateX(${offsetLeft}px)`;
   }
 
   constructor() {
     this.childTabIndicator.className =
-      'absolute -bottom-0.5 h-0.5 w-0 -translate-x-full rounded-none bg-zinc-300 transition-[transform,_width]';
+      'absolute -bottom-0.5 h-0.5 w-0 -translate-x-0 rounded-none bg-zinc-300 transition-[transform,_width]';
     this.element.appendChild(this.childTabIndicator);
   }
 
   ngAfterViewInit(): void {
     const [first] = this.childrenTab();
     if (first) this._update(first);
+
     this.childrenTab().forEach((child) => {
       child.selected.subscribe(() => {
         this._update(child);

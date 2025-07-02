@@ -19,7 +19,7 @@ import { NgtwTabsHeader } from './tabs-header';
   selector: '[ngtwTabs]',
 })
 export class NgtwTabs implements AfterViewInit {
-  protected hostClasses = signal(
+  protected readonly hostClasses = signal(
     'flex flex-col gap-4 bg-transparent text-current',
   );
 
@@ -44,6 +44,8 @@ export class NgtwTabs implements AfterViewInit {
 
     this._changeTabContent(tabsHeader.selectedTab());
 
-    tabsHeader.selectedTab.subscribe((tabOption) => this._changeTabContent(tabOption));
+    tabsHeader.selectedTab.subscribe((tabOption) =>
+      this._changeTabContent(tabOption),
+    );
   }
 }

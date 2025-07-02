@@ -28,7 +28,7 @@
           "watch": true
         }
       },
-      "defaultConfiguration": "production"
+      "defaultConfiguration": "development"
     },
     "tailwind": { 
       "command": "npx @tailwindcss/cli -i {projectRoot}/styles/input.css -o {projectRoot}/styles/directives.css",
@@ -40,7 +40,7 @@
           "args": ["--watch"]
         }
       },
-      "defaultConfiguration": "production"
+      "defaultConfiguration": "development"
     },
     "nx-release-publish": {
       "options": {

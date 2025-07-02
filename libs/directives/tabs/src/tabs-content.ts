@@ -25,7 +25,7 @@ import { ButtonRef } from '@ngtw-kit/common/types';
   selector: '[ngtwTabsContent]',
 })
 export class NgtwTabsContent implements AfterViewInit {
-  protected hostClasses = signal('flex flex-col');
+  protected readonly hostClasses = signal('flex flex-col');
 
   private _elementRef = inject<ButtonRef>(ElementRef);
 

@@ -38,6 +38,11 @@ export const appRoutes: Route[] = [
     title: routeTitle('Input'),
   },
   {
+    loadComponent: () => import('./pages/progress'),
+    path: 'progress',
+    title: routeTitle('Progress'),
+  },
+  {
     loadComponent: () => import('./pages/switch'),
     path: 'switch',
     title: routeTitle('Switch'),
