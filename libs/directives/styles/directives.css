@@ -223,8 +223,8 @@
       max-width: 96rem;
     }
   }
-  .mt-4 {
-    margin-top: calc(var(--spacing) * 4);
+  .block {
+    display: block;
   }
   .flex {
     display: flex;
@@ -285,10 +285,6 @@
   }
   .-translate-x-0 {
     --tw-translate-x: calc(var(--spacing) * -0);
-    translate: var(--tw-translate-x) var(--tw-translate-y);
-  }
-  .-translate-x-full {
-    --tw-translate-x: -100%;
     translate: var(--tw-translate-x) var(--tw-translate-y);
   }
   .transform {
@@ -578,15 +574,6 @@
     transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
     transition-duration: var(--tw-duration, var(--default-transition-duration));
   }
-  .delay-75 {
-    transition-delay: 75ms;
-  }
-  .delay-200 {
-    transition-delay: 200ms;
-  }
-  .delay-500 {
-    transition-delay: 500ms;
-  }
   .outline-none {
     --tw-outline-style: none;
     outline-style: none;
@@ -701,26 +688,6 @@
       width: var(--ngtw-progress);
     }
   }
-  .after\:translate-x-\(--ngtw-progress\) {
-    &::after {
-      content: var(--tw-content);
-      --tw-translate-x: var(--ngtw-progress);
-      translate: var(--tw-translate-x) var(--tw-translate-y);
-    }
-  }
-  .after\:translate-x-\(--progress\) {
-    &::after {
-      content: var(--tw-content);
-      --tw-translate-x: var(--progress);
-      translate: var(--tw-translate-x) var(--tw-translate-y);
-    }
-  }
-  .after\:transform {
-    &::after {
-      content: var(--tw-content);
-      transform: var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,);
-    }
-  }
   .after\:bg-zinc-300 {
     &::after {
       content: var(--tw-content);
@@ -735,24 +702,10 @@
       transition-duration: var(--tw-duration, var(--default-transition-duration));
     }
   }
-  .after\:transition-transform {
-    &::after {
-      content: var(--tw-content);
-      transition-property: transform, translate, scale, rotate;
-      transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
-      transition-duration: var(--tw-duration, var(--default-transition-duration));
-    }
-  }
   .after\:will-change-\[width\] {
     &::after {
       content: var(--tw-content);
       will-change: width;
-    }
-  }
-  .after\:will-change-transform {
-    &::after {
-      content: var(--tw-content);
-      will-change: transform;
     }
   }
   .checked\:before\:translate-x-full {
