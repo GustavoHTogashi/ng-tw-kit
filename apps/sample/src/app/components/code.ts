@@ -4,6 +4,7 @@ import { NgIcon, provideIcons } from '@ng-icons/core';
 import { lucideCopy } from '@ng-icons/lucide';
 import { NGTW_CLIPBOARD } from '@ngtw-kit/common/tokens';
 import hljs from 'highlight.js';
+hljs.highlightAll();
 
 @Component({
   host: {
@@ -19,24 +20,23 @@ import hljs from 'highlight.js';
   selector: 'sample-code',
   template: `
     <header class="flex flex-row items-center justify-between text-zinc-500">
-      <small
-        class="text-2xs px-1 font-sans leading-none tracking-widest"
-      >
+      <small class="text-2xs px-1 font-sans leading-none tracking-widest">
         {{ filename() }}
       </small>
       <button
+        (click)="copy()"
         class="inline-flex items-center rounded-lg p-1.5 transition-colors outline-none hover:text-zinc-300 focus-visible:ring-2 focus-visible:ring-purple-500"
         type="button"
       >
         @if (copied()) {
           <span class="font-sans text-xs"> Copied! </span>
         } @else {
-          <ng-icon (click)="copy()" name="lucideCopy" size="16" />
+          <ng-icon name="lucideCopy" size="16" />
         }
       </button>
     </header>
     <pre
-      class="scrollbar-track-zinc-900 max-h-96 overflow-auto rounded bg-zinc-900 px-8 py-4 leading-loose"
+      class="scrollbar-track-zinc-900 max-h-96 overflow-auto rounded bg-zinc-900 px-8 py-4 leading-loose outline-none focus-visible:ring-2 focus-visible:ring-purple-500"
     >
       <code class="text-sm" [ngClass]="languageClass()" [innerHTML]="highlightedCode()">
         <ng-content/>
@@ -58,10 +58,6 @@ export class Code {
 
   clipboard = inject(NGTW_CLIPBOARD);
   copied = signal(false);
-
-  constructor() {
-    hljs.highlightAll();
-  }
 
   protected copy() {
     this.clipboard.writeText(this.code());

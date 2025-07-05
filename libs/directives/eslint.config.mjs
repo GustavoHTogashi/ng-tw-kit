@@ -41,6 +41,8 @@ export default [
         },
       ],
       "@angular-eslint/no-input-rename": 'off',
+      "@angular-eslint/no-output-rename": 'off',
+      '@angular-eslint/no-output-native': 'off',
     },
   },
   {

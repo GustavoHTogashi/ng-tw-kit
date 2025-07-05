@@ -1,54 +1,50 @@
-import {
-  Directive,
-  effect,
-  ElementRef,
-  inject,
-  input,
-  output,
-  signal,
-  TemplateRef,
-  Type,
-} from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ButtonRef } from '@ngtw-kit/common/types';
-import { fromEvent, tap } from 'rxjs';
-
-export type NgtwTabOption = {
-  content: string | TemplateRef<unknown> | Type<unknown> | undefined;
-  title: string;
-  disabled?: boolean;
-  selected?: boolean;
-};
+import { computed, Directive, effect, ElementRef, inject, input, signal } from '@angular/core';
+import { ButtonElementRef } from '@ngtw-kit/common/types';
+import { NGTW_TABS_STATE } from './_state';
 
 @Directive({
   host: {
-    '[class]': 'hostClasses()',
+    '(focus)': 'state().focusedTab.set(value())',
+    '(mouseup)': 'changeSelectedTab()',
+    '[attr.aria-controls]': 'tabPanelId()',
+    '[attr.aria-selected]': 'isSelected()',
+    '[attr.disabled]': 'disabled() ? "" : null',
+    '[attr.id]': 'id()',
+    '[attr.tabindex]': 'isSelected() ? 0 : -1',
+    '[class]': 'hostClass()',
+    'role': 'tab',
+    'type': 'button',
   },
+  exportAs: 'ngtwTab',
   selector: 'button[ngtwTab]',
 })
 export class NgtwTab {
-  protected readonly hostClasses = signal(
-    'cursor-pointer overflow-hidden rounded-none bg-transparent p-2 text-current outline-transparent transition-[background-color,_outline,_opacity] select-none hover:bg-zinc-800 focus:-outline-offset-2 focus-visible:outline-2 focus-visible:outline-purple-500 disabled:pointer-events-none disabled:opacity-25',
-  );
+  element = inject<ButtonElementRef>(ElementRef).nativeElement;
+  protected readonly state = inject(NGTW_TABS_STATE);
 
-  element = inject<ButtonRef>(ElementRef).nativeElement;
+  disabled = input(false, { alias: 'ngtwTabDisabled' });
+  value = input('', { alias: 'ngtwTab' });
 
-  option = input.required<NgtwTabOption>({
-    alias: 'ngtwTabOption',
-  });
+  readonly id = computed(() => `tab-${this.value()}`);
+  readonly tabPanelId = computed(() => `tabpanel-${this.value()}`);
+  readonly isSelected = computed(() => this.state().selectedTab() === this.value());
 
-  selected = output<void>();
-
-  private _click$ = fromEvent(this.element, 'click').pipe(
-    takeUntilDestroyed(),
-    tap(() => this.selected.emit()),
+  protected readonly hostClass = signal(
+    'relative cursor-pointer rounded-none bg-transparent p-2 text-start text-zinc-600 outline-transparent transition-[background-color,_outline,_opacity] select-none hover:bg-zinc-800 focus:-outline-offset-2 focus-visible:outline-2 focus-visible:outline-purple-500 disabled:pointer-events-none disabled:opacity-25 aria-selected:text-zinc-300',
   );
 
   constructor() {
-    this._click$.subscribe();
+    effect(() => this._updateStateTabs());
+  }
 
-    effect(() => {
-      this.element.disabled = this.option()?.disabled ?? false;
-    });
+  private _updateStateTabs() {
+    this.state().tabs.update((previousTabs) => Array.from(new Set([...previousTabs, this.value()])));
+  }
+
+  changeSelectedTab() {
+    if (this.disabled()) return;
+    this.state().selectedTab.set(this.value());
+    this.state().indicatorSize.set(`${this.element.offsetWidth}px`);
+    this.state().indicatorTranslate.set(`${this.element.offsetLeft}px`);
   }
 }

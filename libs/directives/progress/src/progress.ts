@@ -4,6 +4,7 @@ import {
   ElementRef,
   inject,
   input,
+  numberAttribute,
   signal,
 } from '@angular/core';
 import { HTMLElementRef } from '@ngtw-kit/common/types';
@@ -15,7 +16,7 @@ import { HTMLElementRef } from '@ngtw-kit/common/types';
     '[attr.aria-valuenow]': 'currentValue()',
     '[class]': 'hostClass()',
     '[style.--ngtw-progress]': 'progress()',
-    'role': 'progressbar',
+    role: 'progressbar',
   },
   selector: '[ngtwProgress]',
 })
@@ -29,16 +30,25 @@ export class NgtwProgress {
 
   nativeElement = inject<HTMLElementRef>(ElementRef).nativeElement;
 
-  max = input(this._defaultMax, { alias: 'ngtwProgressMax' });
-  min = input(this._defaultMin, { alias: 'ngtwProgressMin' });
-  value = input(this._defaultMin, { alias: 'ngtwProgressValue' });
+  max = input(this._defaultMax, {
+    alias: 'ngtwProgressMax',
+    transform: numberAttribute,
+  });
+  min = input(this._defaultMin, {
+    alias: 'ngtwProgressMin',
+    transform: numberAttribute,
+  });
+  value = input(this._defaultMin, {
+    alias: 'ngtwProgressValue',
+    transform: numberAttribute,
+  });
 
-  currentValue = computed(() => { 
+  currentValue = computed(() => {
     const val = this.value();
     if (val < this._defaultMin) return this._defaultMin;
     if (val > this._defaultMax) return this._defaultMax;
     return val;
-  })
+  });
 
   progress = computed(() => {
     const multiplier = this.currentValue() / this._defaultMax;

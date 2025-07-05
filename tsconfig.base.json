@@ -15,19 +15,19 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@ngtw-kit/common/di": ["libs/common/di/src/index.ts"],
       "@ngtw-kit/common/tokens": ["libs/common/tokens/src/index.ts"],
       "@ngtw-kit/common/types": ["libs/common/types/src/index.ts"],
       "@ngtw-kit/components": ["libs/components/src/index.ts"],
+      "@ngtw-kit/components/outlet": ["libs/components/outlet/src/index.ts"],
       "@ngtw-kit/directives/button": ["libs/directives/button/src/index.ts"],
       "@ngtw-kit/directives/input": ["libs/directives/input/src/index.ts"],
-      "@ngtw-kit/directives/progress": [
-        "libs/directives/progress/src/index.ts"
-      ],
+      "@ngtw-kit/directives/progress": ["libs/directives/progress/src/index.ts"],
       "@ngtw-kit/directives/switch": ["libs/directives/switch/src/index.ts"],
       "@ngtw-kit/directives/tabs": ["libs/directives/tabs/src/index.ts"],
-      "@ngtw-kit/utils/memoize": ["libs/utils/memoize/src/index.ts"],
-      "@ngtw-kit/utils/router": ["libs/utils/router/src/index.ts"],
-      "@ngtw-kit/utils/string": ["libs/utils/string/src/index.ts"]
+      "@ngtw-kit/utils/core": ["libs/utils/core/src/index.ts"],
+      "@ngtw-kit/utils/toolkit": ["libs/utils/toolkit/src/index.ts"],
+      "@ngtw-kit/utils/type-guards": ["libs/utils/type-guards/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
