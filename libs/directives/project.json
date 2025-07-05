@@ -31,7 +31,7 @@
       "defaultConfiguration": "development"
     },
     "tailwind": { 
-      "command": "npx @tailwindcss/cli -i {projectRoot}/styles/input.css -o {projectRoot}/styles/directives.css",
+      "command": "npx @tailwindcss/cli -i {projectRoot}/_styles/input.css -o {projectRoot}/_styles/directives.css",
       "configurations": {
         "production": {
           "args": ["--minify"]

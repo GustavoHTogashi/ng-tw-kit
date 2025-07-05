@@ -21,8 +21,16 @@ import { Title } from './title';
     <sample-subtitle>Usage</sample-subtitle>
     <sample-divider />
     <sample-block>
-      <sample-code language="typescript" [code]="typescriptCode()" />
-      <sample-code language="html" [code]="htmlCode()" />
+      <sample-code
+        language="typescript"
+        [code]="typescriptCode()"
+        [filename]="typescriptFilename()"
+      />
+      <sample-code
+        language="html"
+        [code]="htmlCode()"
+        [filename]="htmlFilename()"
+      />
     </sample-block>
     <sample-subtitle>Preview</sample-subtitle>
     <sample-divider />
@@ -35,7 +43,9 @@ import { Title } from './title';
 })
 export class Page {
   htmlCode = input('');
+  htmlFilename = input('');
   typescriptCode = input('');
+  typescriptFilename = input('');
 
   pageTitle = input('');
 }

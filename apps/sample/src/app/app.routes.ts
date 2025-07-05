@@ -1,14 +1,12 @@
 import { Route } from '@angular/router';
-import { memoize } from '@ngtw-kit/utils/memoize';
+import { memoize } from '@ngtw-kit/utils/toolkit';
 
 export const appName = 'Ngtw Kit';
 
-const _routeTitle = (title: string): string =>
-  title ? `${appName} ${title}` : appName;
+const _routeTitle = (title: string): string => (title ? `${appName} ${title}` : appName);
 const routeTitle = memoize(_routeTitle);
 
-const _stripAppName = (title: string): string =>
-  title.replace(`${appName}`, '').trim();
+const _stripAppName = (title: string): string => title.replace(`${appName}`, '').trim();
 export const stripAppName = memoize(_stripAppName);
 
 export const appRoutes: Route[] = [

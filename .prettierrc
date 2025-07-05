@@ -1,6 +1,9 @@
 {
-  "singleQuote": true,
   "plugins": ["prettier-plugin-tailwindcss"],
+  "printWidth": 120,
+  "proseWrap": "always",
+  "quoteProps": "consistent",
+  "singleQuote": true,
   "tailwindAttributes": [
     "class",
     "class:",
@@ -12,7 +15,5 @@
     "routerLinkActive",
     "[routerLinkActive]"
   ],
-  "tailwindFunctions": [
-    "signal"
-  ]
+  "tailwindFunctions": ["signal", "computed"]
 }

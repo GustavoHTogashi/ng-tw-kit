@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 @Component({
   host: {
     class:
-      'flex flex-col rounded border-2 border-zinc-800 p-2 gap-1 font-mono text-xs select-none',
+      'flex flex-col flex-1 rounded border-2 border-zinc-800 p-2 gap-1 font-mono text-xs select-none',
   },
   selector: 'sample-preview',
   template: `

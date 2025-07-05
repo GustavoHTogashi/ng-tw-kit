@@ -3,6 +3,7 @@
   "files.associations": {
     "*.css": "tailwindcss"
   },
+  "editor.rulers": [120],
   "tailwindCSS.experimental.classRegex": [
     "class:\\s*'([^']*)",
     "'\\[class\\.([^\\]\\s']*)"
@@ -13,5 +14,5 @@
     "ngClass",
     "routerLinkActive"
   ],
-  "tailwindCSS.classFunctions": ["signal"]
+  "tailwindCSS.classFunctions": ["signal", "computed"]
 }

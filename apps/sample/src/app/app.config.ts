@@ -1,6 +1,7 @@
 import {
   ApplicationConfig,
   provideBrowserGlobalErrorListeners,
+  provideCheckNoChangesConfig,
   provideZonelessChangeDetection,
 } from '@angular/core';
 import { provideRouter, withViewTransitions } from '@angular/router';
@@ -12,6 +13,7 @@ export const appConfig: ApplicationConfig = {
     provideAnimationsAsync(),
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
+    provideCheckNoChangesConfig({exhaustive: true, interval: 10000}),
     provideRouter(appRoutes, withViewTransitions()),
   ],
 };

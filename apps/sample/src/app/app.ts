@@ -1,15 +1,9 @@
 import { ChangeDetectionStrategy, Component, DOCUMENT, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import {
-  Router,
-  RouterLink,
-  RouterLinkActive,
-  RouterOutlet,
-} from '@angular/router';
+import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { provideIcons } from '@ng-icons/core';
 import { simpleAngular } from '@ng-icons/simple-icons';
-import { isActivationEnd, isNavigationEnd } from '@ngtw-kit/utils/router';
-import { isString } from '@ngtw-kit/utils/string';
+import { isActivationEnd, isNavigationEnd, isString } from '@ngtw-kit/utils/type-guards';
 import { fromEvent } from 'rxjs';
 import { filter, tap } from 'rxjs/operators';
 import { appName, stripAppName } from './app.routes';
@@ -23,9 +17,7 @@ import { appName, stripAppName } from './app.routes';
   providers: [provideIcons({ simpleAngular })],
   selector: 'sample-app',
   template: `
-    <aside
-      class="flex flex-col items-stretch justify-between border-r-2 border-zinc-800 bg-zinc-900 p-3"
-    >
+    <aside class="flex flex-col items-stretch justify-between border-r-2 border-zinc-800 bg-zinc-900 p-3">
       <nav class="flex flex-1 flex-col gap-3">
         <a
           routerLink="/"
@@ -45,9 +37,7 @@ import { appName, stripAppName } from './app.routes';
         }
       </nav>
 
-      <p class="text-center font-mono text-xs text-zinc-300">
-        v{{ libVersion }}
-      </p>
+      <p class="text-center font-mono text-xs text-zinc-300">v{{ libVersion }}</p>
     </aside>
     <main class="scrollbar-track-zinc-950 flex flex-3 flex-col overflow-auto">
       <router-outlet />
@@ -70,20 +60,11 @@ export class App {
       return { ...route, title: appName };
     });
 
-  private _navigationEnd$ = this._router.events.pipe(
-    takeUntilDestroyed(),
-    filter(isNavigationEnd),
-  );
+  private _navigationEnd$ = this._router.events.pipe(takeUntilDestroyed(), filter(isNavigationEnd));
 
-  private _activationEnd$ = this._router.events.pipe(
-    takeUntilDestroyed(),
-    filter(isActivationEnd),
-  );
+  private _activationEnd$ = this._router.events.pipe(takeUntilDestroyed(), filter(isActivationEnd));
 
-  private _searchEvent$ = fromEvent<KeyboardEvent>(
-    this.document,
-    'keydown',
-  ).pipe(
+  private _searchEvent$ = fromEvent<KeyboardEvent>(this.document, 'keydown').pipe(
     takeUntilDestroyed(),
     filter((event) => event.key === 'k' && (event.metaKey || event.ctrlKey)),
     tap(() => this.handleSearch()),
