@@ -1,12 +1,12 @@
 {
-  "name": "@ngtw-kit/directives",
   "version": "0.0.1",
+  "name": "@ngtw-kit/directives",
   "peerDependencies": {
-    "@angular/core": ">=20",
-    "@angular/common": ">=20",
-    "vite": ">=6",
-    "@analogjs/vite-plugin-angular": ">=1",
-    "@nx/vite": ">=21"
+    "@angular/core": "~20.0.0",
+    "vite": "^6.0.0",
+    "@analogjs/vite-plugin-angular": "~1.17.1",
+    "@nx/vite": "21.2.1",
+    "rxjs": "~7.8.0"
   },
   "sideEffects": false
 }

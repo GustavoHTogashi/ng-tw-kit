@@ -1,0 +1,10 @@
+@import 'tailwindcss';
+
+@plugin '@tailwindcss/forms';
+
+@theme {
+  --tw-duration: 0.25s;
+  --tw-ease: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@import '@angular/cdk/overlay-prebuilt.css';

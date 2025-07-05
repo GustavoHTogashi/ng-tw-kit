@@ -1,0 +1,18 @@
+{
+  "nxConsole.generateAiAgentRules": true,
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+  "editor.rulers": [120],
+  "tailwindCSS.experimental.classRegex": [
+    "class:\\s*'([^']*)",
+    "'\\[class\\.([^\\]\\s']*)"
+  ],
+  "tailwindCSS.classAttributes": [
+    "class",
+    "className",
+    "ngClass",
+    "routerLinkActive"
+  ],
+  "tailwindCSS.classFunctions": ["signal", "computed"]
+}

@@ -9,6 +9,8 @@ export default [
       '@nx/dependency-checks': [
         'error',
         {
+          checkVersionMismatches: true,
+          checkMissingDependencies: true,
           ignoredFiles: ['{projectRoot}/eslint.config.{js,cjs,mjs,ts,cts,mts}'],
         },
       ],
@@ -38,6 +40,9 @@ export default [
           style: 'kebab-case',
         },
       ],
+      "@angular-eslint/no-input-rename": 'off',
+      "@angular-eslint/no-output-rename": 'off',
+      '@angular-eslint/no-output-native': 'off',
     },
   },
   {

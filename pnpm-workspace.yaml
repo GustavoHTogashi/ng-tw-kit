@@ -1,0 +1,10 @@
+onlyBuiltDependencies:
+  - '@nx/angular-rspack-compiler'
+  - '@parcel/watcher'
+  - '@swc/core'
+  - '@tailwindcss/oxide'
+  - core-js
+  - esbuild
+  - lmdb
+  - msgpackr-extract
+  - nx
