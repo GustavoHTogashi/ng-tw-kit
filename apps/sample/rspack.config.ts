@@ -10,7 +10,6 @@ export default createConfig(
       },
       index: './src/index.html',
       browser: './src/main.ts',
-      polyfills: ['zone.js'],
       tsConfig: './tsconfig.app.json',
       assets: [
         {
@@ -19,7 +18,9 @@ export default createConfig(
         },
       ],
       styles: ['./src/styles.css'],
-      devServer: {},
+      devServer: {
+        port: 10000,
+      },
     },
   },
   {
@@ -52,5 +53,5 @@ export default createConfig(
         devServer: {},
       },
     },
-  }
+  },
 );

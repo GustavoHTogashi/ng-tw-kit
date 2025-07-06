@@ -1,1 +1,1 @@
-export * from './lib/directives/directives';
+export {};

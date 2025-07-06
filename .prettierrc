@@ -1,3 +1,19 @@
 {
-  "singleQuote": true
+  "plugins": ["prettier-plugin-tailwindcss"],
+  "printWidth": 120,
+  "proseWrap": "always",
+  "quoteProps": "consistent",
+  "singleQuote": true,
+  "tailwindAttributes": [
+    "class",
+    "class:",
+    "[class]",
+    "ngClass",
+    "[ngClass]",
+    "ngStyle",
+    "[ngStyle]",
+    "routerLinkActive",
+    "[routerLinkActive]"
+  ],
+  "tailwindFunctions": ["signal", "computed"]
 }

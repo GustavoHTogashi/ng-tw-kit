@@ -2,11 +2,10 @@
   "name": "@ngtw-kit/utils",
   "version": "0.0.1",
   "peerDependencies": {
-    "@angular/core": ">=20",
-    "@angular/common": ">=20",
     "vite": ">=6",
     "@analogjs/vite-plugin-angular": ">=1",
-    "@nx/vite": ">=21"
+    "@nx/vite": ">=21",
+    "@angular/router": "~20.0.0"
   },
   "sideEffects": false
 }
