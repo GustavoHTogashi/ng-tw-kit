@@ -1,7 +1,6 @@
-import { AfterViewInit, computed, contentChildren, Directive, inject } from '@angular/core';
-import { NGTW_TABS_STATE } from './_state';
-import { NgtwTab } from './tab';
-import { NgtwTabsetOrientation } from './_type';
+import { AfterViewInit, computed, Directive } from '@angular/core';
+import { consumeTabsState } from './_state';
+import { NgtwTabsOrientation } from './_type';
 
 @Directive({
   host: {
@@ -13,10 +12,10 @@ import { NgtwTabsetOrientation } from './_type';
     '(keydown.enter)': 'selectTab($event)',
     '(keydown.home)': 'focusFirstTab($event)',
     '(keydown.space)': 'selectTab($event)',
-    '[attr.aria-orientation]': 'state().orientation()',
+    '[attr.aria-orientation]': 'state.orientation()',
     '[class]': 'hostClass()',
-    '[style.--ngtw-tab-indicator-size]': 'state().indicatorSize()',
-    '[style.--ngtw-tab-indicator-translate]': 'state().indicatorTranslate()',
+    '[style.--ngtw-tab-indicator-size]': 'indicatorSize()',
+    '[style.--ngtw-tab-indicator-translate]': 'indicatorTranslate()',
     'aria-label': 'Tabs',
     'aria-multiselectable': 'false',
     'role': 'tablist',
@@ -25,55 +24,60 @@ import { NgtwTabsetOrientation } from './_type';
   selector: '[ngtwTablist]',
 })
 export class NgtwTablist implements AfterViewInit {
-  tabs = contentChildren(NgtwTab);
-  focusableTabs = computed(() => this.tabs().filter((tab) => !tab.disabled()));
-  focusedTabIndex = computed(() => this.focusableTabs().findIndex((tab) => this.state().focusedTab() === tab.value()));
-  focusedTab = computed(() => this.tabs().find((tab) => tab.value() === this.state().focusedTab()));
+  protected readonly state = consumeTabsState();
 
-  protected readonly state = inject(NGTW_TABS_STATE);
+  protected readonly indicatorSize = computed(() => {
+    if (this.state.orientation() === 'horizontal') return `${this.state.selectedTab()?.element.offsetWidth ?? 0}px`;
+    return `${this.state.selectedTab()?.element.offsetHeight ?? 0}px`;
+  });
 
-  readonly hostClass = computed(() => {
+  protected readonly indicatorTranslate = computed(() => {
+    if (this.state.orientation() === 'horizontal') return `${this.state.selectedTab()?.element.offsetLeft ?? 0}px`;
+    return `${this.state.selectedTab()?.element.offsetTop ?? 0}px`;
+  });
+
+  protected readonly hostClass = computed(() => {
     return {
       horizontal:
         'relative flex flex-row border-b-2 border-b-zinc-800 after:absolute after:-bottom-0.5 after:h-0.5 after:w-(--ngtw-tab-indicator-size) after:translate-x-(--ngtw-tab-indicator-translate) after:rounded-none after:bg-zinc-300 after:transition-[translate,_width] after:will-change-[translate,_width]',
       vertical:
         'relative flex flex-col border-l-2 border-l-zinc-800 after:absolute after:-left-0.5 after:h-(--ngtw-tab-indicator-size) after:w-0.5 after:translate-y-(--ngtw-tab-indicator-translate) after:rounded-none after:bg-zinc-300 after:transition-[translate,_height] after:will-change-[translate,_height]',
-    }[this.state().orientation()];
+    }[this.state.orientation()];
   });
 
-  ngAfterViewInit() {
-    const [firstTab] = this.tabs().filter(({ disabled }) => !disabled());
-    firstTab.changeSelectedTab();
+  ngAfterViewInit(): void {
+    this.state.selectedTab.set(this.state.firstTab());
   }
 
-  focusPreviousTab(event: Event, orientation: NgtwTabsetOrientation = 'horizontal') {
+  focusPreviousTab(event: Event, orientation: NgtwTabsOrientation = 'horizontal') {
     event.preventDefault();
-    if (orientation !== this.state().orientation()) return;
-    if (this.focusedTabIndex() === -1) return;
-    const previousIndex = (this.focusedTabIndex() - 1 + this.focusableTabs().length) % this.focusableTabs().length;
-    this.focusableTabs()[previousIndex]?.element.focus();
+    if (orientation !== this.state.orientation()) return;
+    if (this.state.focusedTabIndex() === -1) return;
+    const index =
+      (this.state.focusedTabIndex() - 1 + this.state.enabledTabs().length) % this.state.enabledTabs().length;
+    this.state.enabledTabs()[index]?.focus();
   }
 
-  focusNextTab(event: Event, orientation: NgtwTabsetOrientation = 'horizontal') {
+  focusNextTab(event: Event, orientation: NgtwTabsOrientation = 'horizontal') {
     event.preventDefault();
-    if (orientation !== this.state().orientation()) return;
-    if (this.focusedTabIndex() === -1) return;
-    const nextIndex = (this.focusedTabIndex() + 1) % this.focusableTabs().length;
-    this.focusableTabs()[nextIndex]?.element.focus();
+    if (orientation !== this.state.orientation()) return;
+    if (this.state.focusedTabIndex() === -1) return;
+    const index = (this.state.focusedTabIndex() + 1) % this.state.enabledTabs().length;
+    this.state.enabledTabs()[index]?.focus();
   }
 
   focusFirstTab(event: Event) {
     event.preventDefault();
-    this.focusableTabs().at(0)?.element.focus();
+    this.state.firstTab()?.focus();
   }
 
   focusLastTab(event: Event) {
     event.preventDefault();
-    this.focusableTabs().at(-1)?.element.focus();
+    this.state.lastTab()?.focus();
   }
 
-  selectTab(event: Event) {
-    event.preventDefault();
-    this.focusedTab()?.changeSelectedTab();
+  selectTab(event?: Event) {
+    event?.preventDefault();
+    this.state.selectedTab.set(this.state.focusedTab());
   }
 }

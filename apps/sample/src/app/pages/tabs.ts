@@ -1,6 +1,8 @@
 import {
   Component,
   inject,
+  InjectionToken,
+  Injector,
   linkedSignal,
   signal,
   TemplateRef,
@@ -11,21 +13,16 @@ import {
   NgtwTab,
   NgtwTablist,
   NgtwTabpanel,
-  NgtwTabset,
-  NgtwTabsetOrientation,
+  NgtwTabs,
+  NgtwTabsOrientation,
 } from '@ngtw-kit/directives/tabs';
-import { Preview } from '../components';
 import { Page } from '../components/page';
 
 @Component({
-  imports: [NgtwTab, NgtwTabset, NgtwTabpanel, NgtwTablist, Page],
+  imports: [NgtwTab, NgtwTabs, NgtwTabpanel, NgtwTablist, Page],
   template: `
-    <sample-page
-      [htmlCode]="htmlCode"
-      [typescriptCode]="typescriptCode"
-      pageTitle="Tabs"
-    >
-      <div ngtwTabset>
+    <sample-page>
+      <div ngtwTabs>
         <div ngtwTablist>
           @for (tabOption of tabsOptions(); track $index) {
             <button
@@ -39,7 +36,7 @@ import { Page } from '../components/page';
         @for (tabOption of tabsOptions(); track $index) {
           <div
             [ngtwTabpanel]="tabOption.value"
-            [ngtwTabpanelPortalContent]="tabOption.content"
+            [ngtwTabpanelContent]="tabOption.content"
           ></div>
         }
       </div>
@@ -54,102 +51,77 @@ import { Page } from '../components/page';
   `,
 })
 export default class Tabs {
-  htmlCode = `
-<div ngtwTabs>
-  <div ngtwTabsHeader>
-    @for (tabOption of tabsOptions(); track $index) {
-      <button ngtwTab [option]="tabOption">{{ tabOption.title }}</button>
-    }
-  </div>
-  <ng-template ngtwTabsContent/>
-</div>
-
-<ng-template #tabTemplate>
-  <div class="flex flex-col gap-2">
-    <h2 class="text-lg font-semibold">Title</h2>
-    <p>Paragraph</p>
-  </div>
-</ng-template>
-`;
-
-  typescriptCode = `
-import { Component } from '@angular/core';
-import { NgtwTab, NgtwTabsContent, NgtwTabsHeader, NgtwTabs, NgtwTabOption } from '@ngtw-kit/directives/tabs';
-import { Preview } from '../components';
-
-@Component({
-    imports: [NgtwTab, NgtwTabs, NgtwTabsContent,NgtwTabsHeader],
-    selector: 'app-example',
-    template: \`
-      <div ngtwTabs>
-        <div ngtwTabsHeader>
-          @for (tabOption of tabsOptions(); track $index) {
-            <button ngtwTab [option]="tabOption">{{ tabOption.title }}</button>
-          }
-        </div>
-        <ng-template ngtwTabsContent/>
-      </div>
-
-      <ng-template #tabTemplate>
-        <div class="flex flex-col gap-2">
-          <h2 class="text-lg font-semibold">Title</h2>
-          <p>Paragraph</p>
-        </div>
-      </ng-template>
-    \`,
-})
-export class Example {
-  template = viewChild<TemplateRef<HTMLElement>>('tabTemplate');
-
-  tabsOptions = signal<NgtwTabOption[]>(() => {
-    return [
-      {
-        title: 'Tab string',
-        content: 'Tab string content => lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-      },
-      {
-        title: 'Tab template',
-        content: this.template(),
-      },
-      {
-        title: 'Tab component',
-        content: Preview,
-      },
-    ];
-  });
-}
-`;
-
   template = viewChild.required<TemplateRef<HTMLElement>>('tabTemplate');
 
   viewContainerRef = inject(ViewContainerRef);
 
-  readonly orientation = signal<NgtwTabsetOrientation>('vertical');
+  readonly orientation = signal<NgtwTabsOrientation>('vertical');
 
   tabsOptions = linkedSignal(() => [
     {
       name: 'Tab #1',
       disabled: false,
       value: 'value1',
-      content: this.template(),
+      content: {
+        template: this.template(),
+        context: { $implicit: 1 },
+      },
     },
     {
       name: 'Tab #2',
       disabled: false,
       value: 'value2',
-      content: Preview,
+      content: {
+        component: SampleTabsComponent,
+        injector: Injector.create({
+          providers: [
+            {
+              provide: TAB_VALUE,
+              useValue: 2,
+            },
+          ],
+        }),
+      },
     },
     {
       name: 'Tab #3',
       disabled: false,
       value: 'value3',
-      content: this.template(),
+      content: {
+        template: this.template(),
+        context: { $implicit: 3 },
+      },
     },
     {
       name: 'Tab #4',
       disabled: false,
       value: 'value4',
-      content: Preview,
+      content: {
+        component: SampleTabsComponent,
+        injector: Injector.create({
+          providers: [
+            {
+              provide: TAB_VALUE,
+              useValue: 4,
+            },
+          ],
+        }),
+      },
     },
   ]);
+}
+
+const TAB_VALUE = new InjectionToken<number>('tabValue');
+@Component({
+  host: {
+    class: 'flex flex-col gap-2',
+  },
+  selector: 'sample-tabs-component',
+  template: `
+    <h2 class="text-lg font-semibold">Title {{ value }}</h2>
+    <p>Paragraph</p>
+  `,
+})
+class SampleTabsComponent {
+  value = inject(TAB_VALUE, { optional: true }) ?? 0;
 }

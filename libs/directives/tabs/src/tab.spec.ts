@@ -1,6 +1,6 @@
 import { render } from '@testing-library/angular';
 import { NgtwTab } from './tab';
-import { provideTabsetState } from './_state';
+import { provideTabsState } from './_state';
 import { signal } from '@angular/core';
 
 describe('directive:tab', () => {
@@ -8,7 +8,7 @@ describe('directive:tab', () => {
     const container = await render(`<button ngtwTab="tab1"></button>`, {
       imports: [NgtwTab],
       providers: [
-        provideTabsetState({
+        provideTabsState({
           focusedTab: signal(''),
           indicatorSize: signal(''),
           indicatorTranslate: signal(''),

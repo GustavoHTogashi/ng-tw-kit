@@ -8,3 +8,7 @@
 }
 
 @import '@angular/cdk/overlay-prebuilt.css';
+
+input {
+  background-color: var(--color-zinc-800);
+}
