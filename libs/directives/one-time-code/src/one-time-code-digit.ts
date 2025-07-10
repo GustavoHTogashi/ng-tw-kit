@@ -1,6 +1,7 @@
-import { computed, Directive, effect, ElementRef, inject, signal } from '@angular/core';
+import { computed, Directive, ElementRef, inject, signal } from '@angular/core';
 import { InputElementRef } from '@ngtw-kit/common/types';
 import { consumeOneTimeCodeState } from './_state';
+import { NgtwAlphanumeric } from '@ngtw-kit/directives/alphanumeric';
 
 @Directive({
   exportAs: 'ngtwOneTimeCodeDigit',
@@ -15,6 +16,7 @@ import { consumeOneTimeCodeState } from './_state';
     '[value]': 'value()',
     'maxLength': '1',
   },
+  hostDirectives: [NgtwAlphanumeric],
   selector: 'input[ngtwOneTimeCodeDigit]',
 })
 export class NgtwOneTimeCodeDigit {
@@ -42,10 +44,7 @@ export class NgtwOneTimeCodeDigit {
   onInput() {
     if (this.state.isComplete()) return;
 
-    this.element.value = this.element.value
-      .replace(/[^a-zA-Z0-9]/g, '')
-      .slice(0, 1)
-      .toUpperCase();
+    this.element.value = this.element.value.slice(0, 1).toUpperCase();
 
     if (!this.element.value) return;
 

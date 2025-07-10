@@ -12,7 +12,6 @@ import { Page } from '../components';
     <sample-page>
       <div
         (complete)="onComplete($event)"
-        ngtwOneTimeCodeDisabled
         ngtwOneTimeCode
       >
         <input ngtwOneTimeCodeDigit />

@@ -5,13 +5,13 @@ import { Directive } from '@angular/core';
  */
 @Directive({
   host: {
-    '(input)': 'processInput($event)',
+    '(input)': 'onInput($event)',
   },
-  selector: 'input[ngtwAlphanumeric]',
+  selector: '[ngtwAlphanumeric]',
 })
 export class NgtwAlphanumeric {
-  processInput(event: Event): void {
+  onInput(event: Event): void {
     const input = event.target as HTMLInputElement;
-    input.value = input.value.replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
+    input.value = input.value.replace(/[^a-zA-Z0-9]/g, '');
   }
 }
