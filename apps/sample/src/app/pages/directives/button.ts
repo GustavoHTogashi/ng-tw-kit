@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgtwButton } from '@ngtw-kit/directives/button';
-import { Page } from '../components';
+import { Page } from '../../components';
 
 @Component({
   imports: [NgtwButton, Page],

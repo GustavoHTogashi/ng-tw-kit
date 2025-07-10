@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { Divider } from '../components';
-import { Block } from '../components/block';
-import { Code } from '../components/code';
-import { Subtitle } from '../components/subtitle';
-import { Title } from '../components/title';
+import { Divider } from '../../components';
+import { Block } from '../../components/block';
+import { Code } from '../../components/code';
+import { Subtitle } from '../../components/subtitle';
+import { Title } from '../../components/title';
 
 @Component({
   imports: [Divider, Title, Subtitle, Block, Code],

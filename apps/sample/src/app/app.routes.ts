@@ -1,7 +1,7 @@
 import { Route } from '@angular/router';
 import { addAppNamePrefix, captitalize } from './utils/string';
 
-const paths = [
+const directives = [
   'home',
   'button',
   'input',
@@ -11,16 +11,31 @@ const paths = [
   'separator',
   'switch',
   'tabs',
-]
+];
 
-export const appRoutes: Route[] = [
+// const common = ['core', 'di', 'tokens', 'toolkit', 'type-guards', 'types'];
+
+type AppRoute = Route & {
+  data?: {
+    tag: string;
+  };
+};
+
+export const appRoutes: AppRoute[] = [
   {
     path: '',
     pathMatch: 'full',
     redirectTo: 'home',
   },
-  ...paths.map((path) => ({
-    loadComponent: () => import(`./pages/${path}`),
+  // ...common.map((path) => ({
+  //   data: { tag: 'common' },
+  //   loadComponent: () => import(`./pages/common/${path}`),
+  //   path,
+  //   title: addAppNamePrefix(captitalize(path)),
+  // })),
+  ...directives.map((path) => ({
+    data: { tag: 'Directives' },
+    loadComponent: () => import(`./pages/directives/${path}`),
     path,
     title: addAppNamePrefix(captitalize(path)),
   })),

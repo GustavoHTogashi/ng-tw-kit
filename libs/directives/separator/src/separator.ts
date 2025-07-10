@@ -16,7 +16,9 @@ export class NgtwSeparator {
     }[this.orientation()];
   });
 
-  orientation = input<NgtwSeparatorOrientation>('horizontal');
+  orientation = input<NgtwSeparatorOrientation>('horizontal', {
+    alias: 'ngtwSeparatorOrientation',
+  });
 
   separatorColor = input<string>('var(--color-zinc-800)', {
     alias: 'ngtwSeparatorColor',

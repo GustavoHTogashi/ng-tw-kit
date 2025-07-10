@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgtwLabel } from '@ngtw-kit/directives/label';
-import { Page } from '../components';
+import { Page } from '../../components';
 import { NgtwInput } from '@ngtw-kit/directives/input';
 
 @Component({

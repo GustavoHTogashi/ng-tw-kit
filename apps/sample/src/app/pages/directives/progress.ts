@@ -1,6 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { NgtwProgress } from '@ngtw-kit/directives/progress';
-import { Page } from '../components';
+import { Page } from '../../components';
 
 @Component({
   imports: [NgtwProgress, Page],

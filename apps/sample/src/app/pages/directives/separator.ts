@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgtwSeparator } from '@ngtw-kit/directives/separator';
-import { Page } from '../components';
+import { Page } from '../../components';
 
 @Component({
   imports: [NgtwSeparator, Page],

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgtwSwitch } from '@ngtw-kit/directives/switch';
-import { Page } from '../components';
+import { Page } from '../../components';
 
 @Component({
   imports: [NgtwSwitch, Page],

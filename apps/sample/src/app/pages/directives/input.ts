@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgtwInput } from '@ngtw-kit/directives/input';
-import { Page } from '../components';
+import { Page } from '../../components';
 
 @Component({
   imports: [NgtwInput, Page],

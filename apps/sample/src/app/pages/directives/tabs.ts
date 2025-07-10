@@ -16,7 +16,7 @@ import {
   NgtwTabs,
   NgtwTabsOrientation,
 } from '@ngtw-kit/directives/tabs';
-import { Page } from '../components/page';
+import { Page } from '../../components/page';
 
 @Component({
   imports: [NgtwTab, NgtwTabs, NgtwTabpanel, NgtwTablist, Page],

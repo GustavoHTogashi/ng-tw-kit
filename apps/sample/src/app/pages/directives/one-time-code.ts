@@ -3,7 +3,7 @@ import {
   NgtwOneTimeCode,
   NgtwOneTimeCodeDigit,
 } from '@ngtw-kit/directives/one-time-code';
-import { Page } from '../components';
+import { Page } from '../../components';
 
 @Component({
   imports: [NgtwOneTimeCode, NgtwOneTimeCodeDigit, Page],
