@@ -1,37 +1,34 @@
-import { Component, input } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
-import { Subtitle } from './subtitle';
-import { Preview } from './preview';
+import { AsyncPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Divider } from './divider';
-import { Code } from './code';
+import { ActivatedRoute } from '@angular/router';
 import { Block } from './block';
+import { Divider } from './divider';
+import { Preview } from './preview';
+import { Subtitle } from './subtitle';
 import { Title } from './title';
+import { RemoveAppNamePrefixPipe } from '../utils/string';
 
 @Component({
   host: {
     class: 'flex flex-col gap-4 p-4 text-zinc-300',
   },
-  imports: [Block, Code, Divider, FormsModule, Preview, Subtitle, Title],
+  imports: [
+    AsyncPipe,
+    Block,
+    Divider,
+    FormsModule,
+    Preview,
+    RemoveAppNamePrefixPipe,
+    Subtitle,
+    Title,
+  ],
   selector: 'sample-page',
   template: `
-    @if (pageTitle()) {
-      <sample-title>{{ pageTitle() }}</sample-title>
+    @if (titleEvent | async; as title) {
+      <sample-title>{{ title | removeAppNamePrefix }}</sample-title>
     }
-    <sample-subtitle>Usage</sample-subtitle>
-    <sample-divider />
-    <sample-block>
-      <sample-code
-        language="typescript"
-        [code]="typescriptCode()"
-        [filename]="typescriptFilename()"
-      />
-      <sample-code
-        language="html"
-        [code]="htmlCode()"
-        [filename]="htmlFilename()"
-      />
-    </sample-block>
     <sample-subtitle>Preview</sample-subtitle>
     <sample-divider />
     <sample-block>
@@ -42,10 +39,5 @@ import { Title } from './title';
   `,
 })
 export class Page {
-  htmlCode = input('');
-  htmlFilename = input('');
-  typescriptCode = input('');
-  typescriptFilename = input('');
-
-  pageTitle = input('');
+  titleEvent = inject(ActivatedRoute).title;
 }

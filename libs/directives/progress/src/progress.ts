@@ -1,12 +1,4 @@
-import {
-  computed,
-  Directive,
-  ElementRef,
-  inject,
-  input,
-  numberAttribute,
-  signal,
-} from '@angular/core';
+import { computed, Directive, ElementRef, inject, input, numberAttribute, signal } from '@angular/core';
 import { HTMLElementRef } from '@ngtw-kit/common/types';
 
 @Directive({
@@ -14,9 +6,11 @@ import { HTMLElementRef } from '@ngtw-kit/common/types';
     '[attr.aria-valuemax]': 'max()',
     '[attr.aria-valuemin]': 'min()',
     '[attr.aria-valuenow]': 'currentValue()',
+    '[attr.aria-valuetext]': 'currentValue()',
     '[class]': 'hostClass()',
     '[style.--ngtw-progress]': 'progress()',
-    role: 'progressbar',
+    'aria-label': 'Progress Bar',
+    'role': 'progressbar',
   },
   selector: '[ngtwProgress]',
 })
@@ -39,15 +33,15 @@ export class NgtwProgress {
     transform: numberAttribute,
   });
   value = input(this._defaultMin, {
-    alias: 'ngtwProgressValue',
+    alias: 'ngtwProgress',
     transform: numberAttribute,
   });
 
   currentValue = computed(() => {
-    const val = this.value();
-    if (val < this._defaultMin) return this._defaultMin;
-    if (val > this._defaultMax) return this._defaultMax;
-    return val;
+    const value = this.value();
+    if (value <= this._defaultMin) return this._defaultMin;
+    if (value > this._defaultMax) return this._defaultMax;
+    return value;
   });
 
   progress = computed(() => {

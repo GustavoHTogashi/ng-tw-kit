@@ -6,32 +6,9 @@ import { Page } from '../components';
   imports: [NgtwSwitch, Page],
   selector: 'sample-switch',
   template: `
-    <sample-page
-      [htmlCode]="htmlCode"
-      [typescriptCode]="typescriptCode"
-      pageTitle="Switch"
-    >
+    <sample-page>
       <input ngtwSwitch />
     </sample-page>
   `,
 })
-export default class Switch {
-  htmlCode = `
-<input ngtwSwitch />
-`;
-
-  typescriptCode = `
-import { Component } from '@angular/core';
-import { NgtwSwitch } from '@ngtw-kit/directives/switch';
-
-@Component({
-  imports: [NgtwSwitch],
-  selector: 'app-example',
-  template: \`
-    <input ngtwSwitch />
-  \`,
-})
-
-export class Example {}
-`;
-}
+export default class Switch {}

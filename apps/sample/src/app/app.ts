@@ -1,43 +1,78 @@
-import { ChangeDetectionStrategy, Component, DOCUMENT, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DOCUMENT,
+  inject,
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { provideIcons } from '@ng-icons/core';
-import { simpleAngular } from '@ng-icons/simple-icons';
-import { isActivationEnd, isNavigationEnd, isString } from '@ngtw-kit/utils/type-guards';
+import {
+  Router,
+  RouterLink,
+  RouterLinkActive,
+  RouterOutlet,
+} from '@angular/router';
+import { NgIcon, provideIcons } from '@ng-icons/core';
+import { lucideSearch } from '@ng-icons/lucide';
+import { isString } from '@ngtw-kit/common/type-guards';
+import { NgtwButton } from '@ngtw-kit/directives/button';
+import { NgtwSeparator } from '@ngtw-kit/directives/separator';
 import { fromEvent } from 'rxjs';
 import { filter, tap } from 'rxjs/operators';
-import { appName, stripAppName } from './app.routes';
+import { removeAppNamePrefix } from './utils/string';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'flex flex-row flex-1 h-screen w-screen bg-zinc-950 font-sans',
   },
-  imports: [RouterLink, RouterLinkActive, RouterOutlet],
-  providers: [provideIcons({ simpleAngular })],
+  imports: [
+    NgtwButton,
+    NgtwSeparator,
+    RouterLink,
+    RouterLinkActive,
+    RouterOutlet,
+    NgIcon,
+  ],
+  providers: [provideIcons({ lucideSearch })],
   selector: 'sample-app',
   template: `
-    <aside class="flex flex-col items-stretch justify-between border-r-2 border-zinc-800 bg-zinc-900 p-3">
-      <nav class="flex flex-1 flex-col gap-3">
+    <aside
+      class="flex flex-col items-stretch justify-between gap-3 border-r-2 border-zinc-800 bg-zinc-900 p-2"
+    >
+      <nav class="scrollbar-track-zinc-900 flex flex-1 flex-col gap-3">
         <a
           routerLink="/"
           class="flex items-center self-center p-2 text-sm leading-none whitespace-nowrap text-transparent transition-[background-color,_box-shadow,_color,_opacity] outline-none hover:opacity-75 focus-visible:ring-2 focus-visible:ring-purple-500"
         >
           <img class="w-8" src="/images/logo.png" alt="logo" />
         </a>
-        <div class="h-0.5 w-full rounded-full bg-zinc-800"></div>
-        @for (sidemenuItem of sidemenuItems; track sidemenuItem.path) {
-          <a
-            [routerLink]="sidemenuItem.path"
-            class="gap-2 rounded p-2 text-sm leading-none text-zinc-300 transition-[background-color,_box-shadow,_color,_opacity] outline-none hover:bg-zinc-800 focus-visible:ring-2 focus-visible:ring-purple-500"
-            routerLinkActive="bg-gradient-to-r from-sky-500 via-violet-500 to-rose-500 bg-clip-text !text-transparent"
-          >
-            {{ sidemenuItem.title }}
-          </a>
-        }
+        <div ngtwSeparator></div>
+        <button
+          (mouseup)="handleSearch()"
+          ngtwButton
+          type="button"
+          class="flex flex-row items-center justify-center gap-3 text-xs text-zinc-500"
+        >
+          <p class="font-sans">Search</p>
+          <ng-icon name="lucideSearch" size="16" />
+        </button>
+        <div ngtwSeparator></div>
+        <div class="flex h-0 shrink-0 grow flex-col gap-2 overflow-auto p-1">
+          @for (sidemenuItem of sidemenuItems; track sidemenuItem.path) {
+            <a
+              [routerLink]="sidemenuItem.path"
+              class="gap-2 rounded p-2 text-sm leading-none text-zinc-300 transition-[background-color,_box-shadow,_color,_opacity] outline-none hover:bg-zinc-800 focus-visible:ring-2 focus-visible:ring-purple-500"
+              routerLinkActive="bg-gradient-to-r from-sky-500 via-violet-500 to-rose-500 bg-clip-text !text-transparent"
+            >
+              {{ sidemenuItem.title }}
+            </a>
+          }
+        </div>
       </nav>
-
-      <p class="text-center font-mono text-xs text-zinc-300">v{{ libVersion }}</p>
+      <div ngtwSeparator></div>
+      <p class="text-center font-mono text-xs text-zinc-300">
+        v{{ libVersion }}
+      </p>
     </aside>
     <main class="scrollbar-track-zinc-950 flex flex-3 flex-col overflow-auto">
       <router-outlet />
@@ -50,21 +85,16 @@ export class App {
   protected document = inject(DOCUMENT);
 
   protected sidemenuItems = this._router.config
-    .filter(({ path }) => {
-      return path && path !== 'home' && path !== '**' && path !== 'test';
-    })
-    .map((route) => {
-      if (isString(route.title)) {
-        return { ...route, title: stripAppName(route.title) };
-      }
-      return { ...route, title: appName };
-    });
+    .filter(({ path }) => path && !['home', '**', 'test'].includes(path))
+    .map((route) => ({
+      ...route,
+      title: isString(route.title) ? removeAppNamePrefix(route.title) : '',
+    }));
 
-  private _navigationEnd$ = this._router.events.pipe(takeUntilDestroyed(), filter(isNavigationEnd));
-
-  private _activationEnd$ = this._router.events.pipe(takeUntilDestroyed(), filter(isActivationEnd));
-
-  private _searchEvent$ = fromEvent<KeyboardEvent>(this.document, 'keydown').pipe(
+  private _searchEvent$ = fromEvent<KeyboardEvent>(
+    this.document,
+    'keydown',
+  ).pipe(
     takeUntilDestroyed(),
     filter((event) => event.key === 'k' && (event.metaKey || event.ctrlKey)),
     tap(() => this.handleSearch()),
@@ -75,8 +105,6 @@ export class App {
   }
 
   constructor() {
-    this._activationEnd$.subscribe();
-    this._navigationEnd$.subscribe();
     this._searchEvent$.subscribe();
   }
 }

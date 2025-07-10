@@ -1,14 +1,14 @@
 import { render } from '@testing-library/angular';
-import { NgtwTabset } from './tabset';
+import { NgtwTabs } from './tabs';
 import { NgtwTab } from './tab';
 import { NgtwTablist } from './tablist';
 import { signal } from '@angular/core';
-import { provideTabsetState } from './_state';
+import { provideTabsState } from './_state';
 
-describe('directive:tabset', () => {
-  it('should render a tabset', async () => {
+describe('directive:tabs', () => {
+  it('should render a tabs', async () => {
     const container = await render(
-      `<div ngtwTabset>
+      `<div ngtwTabs>
         <div ngtwTablist>
           <button ngtwTab="tab1">Tab 1</button>
           <button ngtwTab="tab2">Tab 2</button>
@@ -19,9 +19,9 @@ describe('directive:tabset', () => {
         <div ngtwTabpanel="tab3"></div>
       </div>`,
       {
-        imports: [NgtwTabset, NgtwTabset, NgtwTab, NgtwTablist],
+        imports: [NgtwTabs, NgtwTabs, NgtwTab, NgtwTablist],
         providers: [
-          provideTabsetState({
+          provideTabsState({
             focusedTab: signal(''),
             indicatorSize: signal(''),
             indicatorTranslate: signal(''),
@@ -33,7 +33,7 @@ describe('directive:tabset', () => {
       },
     );
     await new Promise((resolve) => setTimeout(resolve, 0)); // wait for async rendering
-    const tabElement = container.getByRole('tabset');
+    const tabElement = container.getByRole('tabs');
 
     expect(tabElement).toBeTruthy();
   });

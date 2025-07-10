@@ -1,6 +1,15 @@
 {
+  "overrides": [
+    {
+      "files": "*.md",
+      "options": {
+        "printWidth": 200,
+        "proseWrap": "never"
+      }
+    }
+  ],
   "plugins": ["prettier-plugin-tailwindcss"],
-  "printWidth": 120,
+  "printWidth": 80,
   "proseWrap": "always",
   "quoteProps": "consistent",
   "singleQuote": true,

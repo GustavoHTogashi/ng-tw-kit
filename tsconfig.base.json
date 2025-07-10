@@ -15,19 +15,22 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@ngtw-kit/common/core": ["libs/common/core/src/index.ts"],
       "@ngtw-kit/common/di": ["libs/common/di/src/index.ts"],
       "@ngtw-kit/common/tokens": ["libs/common/tokens/src/index.ts"],
+      "@ngtw-kit/common/toolkit": ["libs/common/toolkit/src/index.ts"],
+      "@ngtw-kit/common/type-guards": ["libs/common/type-guards/src/index.ts"],
       "@ngtw-kit/common/types": ["libs/common/types/src/index.ts"],
       "@ngtw-kit/components": ["libs/components/src/index.ts"],
-      "@ngtw-kit/components/outlet": ["libs/components/outlet/src/index.ts"],
+      "@ngtw-kit/directives/alphanumeric": ["libs/directives/alphanumeric/src/index.ts"],
       "@ngtw-kit/directives/button": ["libs/directives/button/src/index.ts"],
       "@ngtw-kit/directives/input": ["libs/directives/input/src/index.ts"],
+      "@ngtw-kit/directives/label": ["libs/directives/label/src/index.ts"],
+      "@ngtw-kit/directives/one-time-code": ["libs/directives/one-time-code/src/index.ts"],
       "@ngtw-kit/directives/progress": ["libs/directives/progress/src/index.ts"],
+      "@ngtw-kit/directives/separator": ["libs/directives/separator/src/index.ts"],
       "@ngtw-kit/directives/switch": ["libs/directives/switch/src/index.ts"],
       "@ngtw-kit/directives/tabs": ["libs/directives/tabs/src/index.ts"],
-      "@ngtw-kit/utils/core": ["libs/utils/core/src/index.ts"],
-      "@ngtw-kit/utils/toolkit": ["libs/utils/toolkit/src/index.ts"],
-      "@ngtw-kit/utils/type-guards": ["libs/utils/type-guards/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
