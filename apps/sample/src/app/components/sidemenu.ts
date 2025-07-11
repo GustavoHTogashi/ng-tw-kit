@@ -35,17 +35,11 @@ import { removeAppNamePrefix } from '../utils/string';
       </a>
       <button
         (mouseup)="handleSearch()"
-        (mouseenter)="searchHint.set('Search Documentation')"
-        (mouseleave)="searchHint.set('')"
         class="flex flex-row items-center justify-center gap-2 bg-zinc-900 text-xs text-zinc-600 transition-colors"
         ngtwButton
         type="button"
       >
-        @if (searchHint()) {
-          <p>Search</p>
-        } @else {
-          <ng-icon name="lucideSearch" size="14" />
-        }
+        <ng-icon name="lucideSearch" size="14" />
         <p
           class="flex items-center rounded border-b border-zinc-500 bg-zinc-800 px-1.5 py-0.5 tracking-widest text-zinc-500"
         >
@@ -60,7 +54,7 @@ import { removeAppNamePrefix } from '../utils/string';
     </nav>
     <div ngtwSeparator></div>
     <nav
-      class="scrollbar-track-zinc-900 flex h-0 shrink-0 grow flex-col gap-2 overflow-auto p-0.5 text-zinc-300"
+      class="scrollbar-track-zinc-950 flex h-0 shrink-0 grow flex-col gap-2 overflow-auto p-0.5 text-zinc-300"
     >
       @for (groupedSidemenuItem of groupedSidemenuItems(); track $index) {
         <p class="text-lg font-semibold">
@@ -99,7 +93,6 @@ export class Sidemenu {
 
   protected readonly isMac = signal(/mac/i.test(this._navigator.userAgent));
   protected readonly libVersion = signal('0.0.0');
-  protected readonly searchHint = signal<string>('');
   protected readonly sidemenuItems = signal(
     this._router.config
       .filter(({ path }) => {

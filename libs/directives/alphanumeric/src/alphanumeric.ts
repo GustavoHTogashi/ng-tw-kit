@@ -1,17 +1,17 @@
 import { Directive } from '@angular/core';
 
 /**
- * Restricts input to alphanumeric characters (A-Z, a-z, 0-9).
+ * Restricts input to alphanumeric characters (letters and numbers only).
  */
 @Directive({
   host: {
     '(input)': 'onInput($event)',
   },
-  selector: '[ngtwAlphanumeric]',
+  selector: 'input[ngtwAlphanumeric]',
 })
 export class NgtwAlphanumeric {
-  onInput(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    input.value = input.value.replace(/[^a-zA-Z0-9]/g, '');
+  onInput($event: Event) {
+    const element = $event.target as HTMLInputElement;
+    element.value = element.value.replace(/[^0-9A-Za-zÀ-ÖØ-öø-ÿ]+/g, '');
   }
 }

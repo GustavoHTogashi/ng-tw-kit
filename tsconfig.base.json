@@ -22,15 +22,39 @@
       "@ngtw-kit/common/type-guards": ["libs/common/type-guards/src/index.ts"],
       "@ngtw-kit/common/types": ["libs/common/types/src/index.ts"],
       "@ngtw-kit/components": ["libs/components/src/index.ts"],
-      "@ngtw-kit/directives/alphanumeric": ["libs/directives/alphanumeric/src/index.ts"],
+      "@ngtw-kit/directives/alphabetic": [
+        "libs/directives/alphabetic/src/index.ts"
+      ],
+      "@ngtw-kit/directives/alphanumeric": [
+        "libs/directives/alphanumeric/src/index.ts"
+      ],
       "@ngtw-kit/directives/button": ["libs/directives/button/src/index.ts"],
+      "@ngtw-kit/directives/currency": [
+        "libs/directives/currency/src/index.ts"
+      ],
+      "@ngtw-kit/directives/date": ["libs/directives/date/src/index.ts"],
+      "@ngtw-kit/directives/dropzone": [
+        "libs/directives/dropzone/src/index.ts"
+      ],
       "@ngtw-kit/directives/input": ["libs/directives/input/src/index.ts"],
       "@ngtw-kit/directives/label": ["libs/directives/label/src/index.ts"],
-      "@ngtw-kit/directives/one-time-code": ["libs/directives/one-time-code/src/index.ts"],
-      "@ngtw-kit/directives/progress": ["libs/directives/progress/src/index.ts"],
-      "@ngtw-kit/directives/separator": ["libs/directives/separator/src/index.ts"],
+      "@ngtw-kit/directives/numeric": ["libs/directives/numeric/src/index.ts"],
+      "@ngtw-kit/directives/one-time-code": [
+        "libs/directives/one-time-code/src/index.ts"
+      ],
+      "@ngtw-kit/directives/progress": [
+        "libs/directives/progress/src/index.ts"
+      ],
+      "@ngtw-kit/directives/separator": [
+        "libs/directives/separator/src/index.ts"
+      ],
+      "@ngtw-kit/directives/slider": ["libs/directives/slider/src/index.ts"],
       "@ngtw-kit/directives/switch": ["libs/directives/switch/src/index.ts"],
       "@ngtw-kit/directives/tabs": ["libs/directives/tabs/src/index.ts"],
+      "@ngtw-kit/directives/textarea": [
+        "libs/directives/textarea/src/index.ts"
+      ],
+      "@ngtw-kit/directives/toggle": ["libs/directives/toggle/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

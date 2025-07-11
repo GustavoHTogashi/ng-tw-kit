@@ -1,0 +1,14 @@
+import { Component } from '@angular/core';
+import { NgtwCurrency } from '@ngtw-kit/directives/currency';
+import { Page } from '../../components';
+
+@Component({
+  imports: [NgtwCurrency, Page],
+  selector: 'sample-currency',
+  template: `
+    <sample-page>
+      <input ngtwCurrency placeholder="Enter currency text" />
+    </sample-page>
+  `,
+})
+export default class Currency {}

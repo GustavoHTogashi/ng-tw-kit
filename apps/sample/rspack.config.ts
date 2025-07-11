@@ -21,6 +21,7 @@ export default createConfig(
       devServer: {
         port: 10000,
       },
+      commonChunk: false
     },
   },
   {
