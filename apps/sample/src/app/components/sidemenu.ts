@@ -3,19 +3,22 @@ import {
   Component,
   computed,
   DOCUMENT,
+  effect,
   inject,
   signal,
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { Route, Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { lucideSearch } from '@ng-icons/lucide';
-import { NGTW_NAVIGATOR } from '@ngtw-kit/common/tokens';
-import { isString } from '@ngtw-kit/common/type-guards';
+import { Log } from '@ngtw-kit/common/core';
+import { isString } from '@ngtw-kit/common/types';
+import { NGTW_NAVIGATOR, NgtwCrypto, toData } from '@ngtw-kit/common/web-apis';
 import { NgtwButton } from '@ngtw-kit/directives/button';
 import { NgtwSeparator } from '@ngtw-kit/directives/separator';
 import { filter, fromEvent, tap } from 'rxjs';
 import { removeAppNamePrefix } from '../utils/string';
+import { groupBy } from '@ngtw-kit/common/toolkit';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -35,21 +38,30 @@ import { removeAppNamePrefix } from '../utils/string';
       </a>
       <button
         (mouseup)="handleSearch()"
-        class="flex flex-row items-center justify-center gap-2 bg-zinc-900 text-xs text-zinc-600 transition-colors"
+        class="flex flex-row items-center justify-center gap-1 bg-zinc-900 text-xs text-zinc-600 transition-colors"
         ngtwButton
         type="button"
       >
-        <ng-icon name="lucideSearch" size="14" />
-        <p
-          class="flex items-center rounded border-b border-zinc-500 bg-zinc-800 px-1.5 py-0.5 tracking-widest text-zinc-500"
+        <ng-icon name="lucideSearch" size="14" class="mr-2" />
+
+        @if (isMac()) {
+          <span
+            class="flex h-5 w-5 items-center justify-center rounded border-b-2 border-zinc-500 bg-zinc-800 text-center leading-none text-zinc-500"
+          >
+            ⌘
+          </span>
+        } @else {
+          <span
+            class="text-2xs flex h-5 w-5 items-center justify-center rounded border-b-2 border-zinc-500 bg-zinc-800 text-center leading-none text-zinc-500"
+          >
+            Ctrl
+          </span>
+        }
+        <span
+          class="flex h-5 w-5 items-center justify-center rounded border-b-2 border-zinc-500 bg-zinc-800 text-center leading-none text-zinc-500"
         >
-          @if (isMac()) {
-            <span>⌘&nbsp;+&nbsp;</span>
-          } @else {
-            <span class="tracking-tighter">ctrl&nbsp;+&nbsp;</span>
-          }
-          <span>K</span>
-        </p>
+          K
+        </span>
       </button>
     </nav>
     <div ngtwSeparator></div>
@@ -58,9 +70,9 @@ import { removeAppNamePrefix } from '../utils/string';
     >
       @for (groupedSidemenuItem of groupedSidemenuItems(); track $index) {
         <p class="text-lg font-semibold">
-          {{ groupedSidemenuItem.group }}
+          {{ groupedSidemenuItem[0] }}
         </p>
-        @for (sidemenuItem of sidemenuItems(); track sidemenuItem.path) {
+        @for (sidemenuItem of groupedSidemenuItem[1]; track sidemenuItem.path) {
           <a
             [routerLink]="sidemenuItem.path"
             class="gap-2 rounded p-2 text-sm leading-none transition-[background-color,_box-shadow,_color,_opacity] outline-none hover:bg-zinc-800 focus-visible:ring-2 focus-visible:ring-purple-500"
@@ -81,6 +93,7 @@ export class Sidemenu {
   private readonly _document = inject(DOCUMENT);
   private readonly _navigator = inject(NGTW_NAVIGATOR);
   private readonly _router = inject(Router);
+  private readonly _crypto = inject(NgtwCrypto);
 
   private readonly _searchEvent = fromEvent<KeyboardEvent>(
     this._document,
@@ -91,7 +104,7 @@ export class Sidemenu {
     tap(() => this.handleSearch()),
   );
 
-  protected readonly isMac = signal(/mac/i.test(this._navigator.userAgent));
+  protected readonly isMac = signal(/windows/i.test(this._navigator.userAgent));
   protected readonly libVersion = signal('0.0.0');
   protected readonly sidemenuItems = signal(
     this._router.config
@@ -106,30 +119,24 @@ export class Sidemenu {
       }),
   );
   protected readonly groupedSidemenuItems = computed(() => {
-    const groups = this.sidemenuItems().reduce(
-      (result, sidemenuItem) => {
-        const group = sidemenuItem?.data?.['tag'] ?? 'General';
-
-        if (!result[group]) result[group] = [];
-
-        result[group] = [...result[group], sidemenuItem];
-
-        return result;
-      },
-      {} as Record<string, Route[]>,
+    return groupBy(
+      this.sidemenuItems(),
+      (item) => item.data?.['tag'] ?? 'General',
     );
+  });
 
-    return Object.entries(groups).map(([group, sidemenuItems]) => ({
-      group,
-      sidemenuItems: sidemenuItems.filter(({ title }) => title),
-    }));
+  hash = toSignal(this._crypto.digest('sha-1', 'test').pipe(toData<string>()), {
+    initialValue: '',
   });
 
   constructor() {
     this._searchEvent.subscribe();
+    effect(() => {
+      console.log(this.hash())
+    })
   }
 
   protected handleSearch() {
-    console.log('Search event triggered');
+    Log.debug('sidemenu', 'Search event triggered');
   }
 }

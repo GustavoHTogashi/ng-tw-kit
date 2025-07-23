@@ -1,1 +1,3 @@
-export * from './dropzone'
+export * from './dropzone-accept-info';
+export * from './dropzone-size-info';
+export * from './dropzone';

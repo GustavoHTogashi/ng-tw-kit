@@ -39,7 +39,7 @@ describe('directive:progress', () => {
   it('should update progress value to 50', async () => {
     const value = 50;
     const container = await render(
-      `<div ngtwProgress [ngtwProgressValue]="${value}"></div>`,
+      `<div ngtwProgress [ngtwProgress]="${value}"></div>`,
       {
         imports: [NgtwProgress],
       },
@@ -56,7 +56,7 @@ describe('directive:progress', () => {
   it('should update progress value to 0', async () => {
     const value = -50;
     const container = await render(
-      `<div ngtwProgress [ngtwProgressValue]="${value}"></div>`,
+      `<div ngtwProgress [ngtwProgress]="${value}"></div>`,
       {
         imports: [NgtwProgress],
       },
@@ -73,7 +73,7 @@ describe('directive:progress', () => {
   it('should update progress value to 100', async () => {
     const value = 150;
     const container = await render(
-      `<div ngtwProgress [ngtwProgressValue]="${value}"></div>`,
+      `<div ngtwProgress [ngtwProgress]="${value}"></div>`,
       {
         imports: [NgtwProgress],
       },

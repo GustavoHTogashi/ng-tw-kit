@@ -7,7 +7,7 @@ import { Page } from '../../components';
   selector: 'sample-currency',
   template: `
     <sample-page>
-      <input ngtwCurrency placeholder="Enter currency text" />
+      <input ngtwCurrency ngtwCurrencyAllowEmpty ngtwCurrencyAllowNegative placeholder="Enter currency text" />
     </sample-page>
   `,
 })

@@ -27,12 +27,14 @@ export class NgtwTablist implements AfterViewInit {
   protected readonly state = consumeTabsState();
 
   protected readonly indicatorSize = computed(() => {
-    if (this.state.orientation() === 'horizontal') return `${this.state.selectedTab()?.element.offsetWidth ?? 0}px`;
+    if (this.state.orientation() === 'horizontal')
+      return `${this.state.selectedTab()?.element.offsetWidth ?? 0}px`;
     return `${this.state.selectedTab()?.element.offsetHeight ?? 0}px`;
   });
 
   protected readonly indicatorTranslate = computed(() => {
-    if (this.state.orientation() === 'horizontal') return `${this.state.selectedTab()?.element.offsetLeft ?? 0}px`;
+    if (this.state.orientation() === 'horizontal')
+      return `${this.state.selectedTab()?.element.offsetLeft ?? 0}px`;
     return `${this.state.selectedTab()?.element.offsetTop ?? 0}px`;
   });
 
@@ -49,12 +51,16 @@ export class NgtwTablist implements AfterViewInit {
     this.state.selectedTab.set(this.state.firstTab());
   }
 
-  focusPreviousTab(event: Event, orientation: NgtwTabsOrientation = 'horizontal') {
+  focusPreviousTab(
+    event: Event,
+    orientation: NgtwTabsOrientation = 'horizontal',
+  ) {
     event.preventDefault();
     if (orientation !== this.state.orientation()) return;
     if (this.state.focusedTabIndex() === -1) return;
     const index =
-      (this.state.focusedTabIndex() - 1 + this.state.enabledTabs().length) % this.state.enabledTabs().length;
+      (this.state.focusedTabIndex() - 1 + this.state.enabledTabs().length) %
+      this.state.enabledTabs().length;
     this.state.enabledTabs()[index]?.focus();
   }
 
@@ -62,7 +68,8 @@ export class NgtwTablist implements AfterViewInit {
     event.preventDefault();
     if (orientation !== this.state.orientation()) return;
     if (this.state.focusedTabIndex() === -1) return;
-    const index = (this.state.focusedTabIndex() + 1) % this.state.enabledTabs().length;
+    const index =
+      (this.state.focusedTabIndex() + 1) % this.state.enabledTabs().length;
     this.state.enabledTabs()[index]?.focus();
   }
 

@@ -16,11 +16,12 @@
     "baseUrl": ".",
     "paths": {
       "@ngtw-kit/common/core": ["libs/common/core/src/index.ts"],
-      "@ngtw-kit/common/di": ["libs/common/di/src/index.ts"],
-      "@ngtw-kit/common/tokens": ["libs/common/tokens/src/index.ts"],
+      "@ngtw-kit/common/events-plugin": [
+        "libs/common/events-plugin/src/index.ts"
+      ],
       "@ngtw-kit/common/toolkit": ["libs/common/toolkit/src/index.ts"],
-      "@ngtw-kit/common/type-guards": ["libs/common/type-guards/src/index.ts"],
       "@ngtw-kit/common/types": ["libs/common/types/src/index.ts"],
+      "@ngtw-kit/common/web-apis": ["libs/common/web-apis/src/index.ts"],
       "@ngtw-kit/components": ["libs/components/src/index.ts"],
       "@ngtw-kit/directives/alphabetic": [
         "libs/directives/alphabetic/src/index.ts"
@@ -44,6 +45,9 @@
       ],
       "@ngtw-kit/directives/progress": [
         "libs/directives/progress/src/index.ts"
+      ],
+      "@ngtw-kit/directives/scrollbar": [
+        "libs/directives/scrollbar/src/index.ts"
       ],
       "@ngtw-kit/directives/separator": [
         "libs/directives/separator/src/index.ts"

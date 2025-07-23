@@ -1,4 +1,12 @@
-import { computed, Directive, ElementRef, inject, input, numberAttribute, signal } from '@angular/core';
+import {
+  computed,
+  Directive,
+  ElementRef,
+  inject,
+  input,
+  numberAttribute,
+  signal,
+} from '@angular/core';
 import { HTMLElementRef } from '@ngtw-kit/common/types';
 
 @Directive({
@@ -39,6 +47,7 @@ export class NgtwProgress {
 
   currentValue = computed(() => {
     const value = this.value();
+    if (isNaN(value)) return this._defaultMin;
     if (value <= this._defaultMin) return this._defaultMin;
     if (value > this._defaultMax) return this._defaultMax;
     return value;

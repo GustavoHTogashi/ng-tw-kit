@@ -7,5 +7,7 @@ import { Directive, signal } from '@angular/core';
   selector: 'label[ngtwLabel]',
 })
 export class NgtwLabel {
-  protected readonly hostClass = signal('inline-block leading-none text-current');
+  protected readonly hostClass = signal(
+    'inline-block leading-none text-current',
+  );
 }

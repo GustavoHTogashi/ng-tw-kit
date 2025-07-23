@@ -1,4 +1,10 @@
-import type { Injector, Signal, TemplateRef, Type, WritableSignal } from '@angular/core';
+import type {
+  Injector,
+  Signal,
+  TemplateRef,
+  Type,
+  WritableSignal,
+} from '@angular/core';
 import { NgtwTab } from './tab';
 
 export type NgtwTabsOrientation = 'horizontal' | 'vertical';
@@ -24,12 +30,25 @@ export type NgtwTabpanelComponentContent = {
   injector: Injector | undefined;
 };
 
-export type NgtwTabpanelContent = NgtwTabpanelTemplateContent | NgtwTabpanelComponentContent | undefined;
+export type NgtwTabpanelContent =
+  | NgtwTabpanelTemplateContent
+  | NgtwTabpanelComponentContent
+  | undefined;
 
-export function isTemplateContent(content: NgtwTabpanelContent): content is NgtwTabpanelTemplateContent {
-  return content !== undefined && (content as NgtwTabpanelTemplateContent).template !== undefined;
+export function isTemplateContent(
+  content: NgtwTabpanelContent,
+): content is NgtwTabpanelTemplateContent {
+  return (
+    content !== undefined &&
+    (content as NgtwTabpanelTemplateContent).template !== undefined
+  );
 }
 
-export function isComponentContent(content: NgtwTabpanelContent): content is NgtwTabpanelComponentContent {
-  return content !== undefined && (content as NgtwTabpanelComponentContent).component !== undefined;
+export function isComponentContent(
+  content: NgtwTabpanelContent,
+): content is NgtwTabpanelComponentContent {
+  return (
+    content !== undefined &&
+    (content as NgtwTabpanelComponentContent).component !== undefined
+  );
 }

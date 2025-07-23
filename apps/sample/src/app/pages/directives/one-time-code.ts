@@ -4,6 +4,7 @@ import {
   NgtwOneTimeCodeDigit,
 } from '@ngtw-kit/directives/one-time-code';
 import { Page } from '../../components';
+import { Log } from '@ngtw-kit/common/core';
 
 @Component({
   imports: [NgtwOneTimeCode, NgtwOneTimeCodeDigit, Page],
@@ -24,6 +25,6 @@ import { Page } from '../../components';
 })
 export default class OneTime {
   onComplete(value: string): void {
-    console.log('One Time Code Complete:', value);
+    Log.debug('One Time Code', 'One Time Code Complete:', value);
   }
 }

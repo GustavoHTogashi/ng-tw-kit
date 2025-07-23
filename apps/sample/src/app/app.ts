@@ -8,7 +8,7 @@ import { Sidemenu } from './components';
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    class: 'flex flex-row flex-1 h-screen w-screen bg-zinc-950 font-sans',
+    class: 'flex flex-row flex-1 h-screen w-screen bg-zinc-950 font-sans ',
   },
   imports: [NgtwSeparator, RouterOutlet, Sidemenu],
   providers: [provideIcons({ lucideSearch })],

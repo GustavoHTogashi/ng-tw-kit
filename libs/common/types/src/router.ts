@@ -1,4 +1,11 @@
-import { ActivationEnd, Event, EventType, NavigationEnd, NavigationError, NavigationStart } from '@angular/router';
+import {
+  ActivationEnd,
+  Event,
+  EventType,
+  NavigationEnd,
+  NavigationError,
+  NavigationStart,
+} from '@angular/router';
 
 export function isNavigationEnd(event: Event): event is NavigationEnd {
   return event.type === EventType.NavigationEnd;

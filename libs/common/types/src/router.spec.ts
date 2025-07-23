@@ -5,7 +5,12 @@ import {
   NavigationError,
   NavigationStart,
 } from '@angular/router';
-import { isActivationEnd, isNavigationEnd, isNavigationError, isNavigationStart } from './router';
+import {
+  isActivationEnd,
+  isNavigationEnd,
+  isNavigationError,
+  isNavigationStart,
+} from './router';
 
 describe('type-guards: string', () => {
   it('should be valid if navigation is navigationEnd', () => {

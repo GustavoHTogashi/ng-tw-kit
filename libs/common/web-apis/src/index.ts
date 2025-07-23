@@ -1,6 +1,5 @@
 export * from './clipboard';
-export * from './mobile';
+export * from './crypto';
 export * from './navigator';
-export * from './platform';
 export * from './window';
 

@@ -12,7 +12,9 @@ import { NgtwTabsOrientation } from './_type';
   selector: '[ngtwTabs]',
 })
 export class NgtwTabs {
-  orientation = input<NgtwTabsOrientation>('horizontal', { alias: 'ngtwTabsOrientation' });
+  orientation = input<NgtwTabsOrientation>('horizontal', {
+    alias: 'ngtwTabsOrientation',
+  });
 
   protected readonly state = createTabsState({ orientation: this.orientation });
 

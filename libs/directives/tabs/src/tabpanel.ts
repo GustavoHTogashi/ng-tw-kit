@@ -1,5 +1,18 @@
-import { ComponentPortal, DomPortalOutlet, TemplatePortal } from '@angular/cdk/portal';
-import { computed, Directive, effect, ElementRef, inject, input, signal, ViewContainerRef } from '@angular/core';
+import {
+  ComponentPortal,
+  DomPortalOutlet,
+  TemplatePortal,
+} from '@angular/cdk/portal';
+import {
+  computed,
+  Directive,
+  effect,
+  ElementRef,
+  inject,
+  input,
+  signal,
+  ViewContainerRef,
+} from '@angular/core';
 import { HTMLElementRef } from '@ngtw-kit/common/types';
 import { consumeTabsState } from './_state';
 import {
@@ -18,7 +31,6 @@ import {
     '[class]': 'hostClass()',
     'role': 'tabpanel',
     'tabindex': '0',
-    'testid': 'tabpanel',
   },
   exportAs: 'ngtwTabpanel',
   selector: '[ngtwTabpanel]',
@@ -28,20 +40,31 @@ export class NgtwTabpanel {
   protected readonly state = consumeTabsState();
   protected readonly viewContainerRef = inject(ViewContainerRef);
 
-  content = input<NgtwTabpanelContent>(undefined, { alias: 'ngtwTabpanelContent' });
+  content = input<NgtwTabpanelContent>(undefined, {
+    alias: 'ngtwTabpanelContent',
+  });
   value = input('', { alias: 'ngtwTabpanel' });
 
   protected readonly id = computed(() => `tabpanel-${this.value()}`);
   protected readonly tabId = computed(() => `tab-${this.value()}`);
-  protected readonly isSelected = computed(() => this.state.selectedTab()?.value() === this.value());
+  protected readonly isSelected = computed(
+    () => this.state.selectedTab()?.value() === this.value(),
+  );
 
   protected readonly hostClass = signal(
     'flex flex-col outline-none focus-visible:ring-2 focus-visible:ring-purple-500',
   );
 
-  private _domPortalOutlet = new DomPortalOutlet(this.element, undefined, this.viewContainerRef.injector);
+  private _domPortalOutlet = new DomPortalOutlet(
+    this.element,
+    undefined,
+    this.viewContainerRef.injector,
+  );
 
-  private _createComponent({ component, injector }: NgtwTabpanelComponentContent) {
+  private _createComponent({
+    component,
+    injector,
+  }: NgtwTabpanelComponentContent) {
     return new ComponentPortal(component, this.viewContainerRef, injector);
   }
 
@@ -51,8 +74,10 @@ export class NgtwTabpanel {
 
   private _attachPortal() {
     const content = this.content();
-    if (isTemplateContent(content)) return this._domPortalOutlet.attach(this._createTemplate(content));
-    if (isComponentContent(content)) return this._domPortalOutlet.attach(this._createComponent(content));
+    if (isTemplateContent(content))
+      return this._domPortalOutlet.attach(this._createTemplate(content));
+    if (isComponentContent(content))
+      return this._domPortalOutlet.attach(this._createComponent(content));
     return;
   }
 

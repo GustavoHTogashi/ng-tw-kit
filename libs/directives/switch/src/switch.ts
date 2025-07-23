@@ -1,4 +1,10 @@
-import { booleanAttribute, Directive, input, model, signal } from '@angular/core';
+import {
+  booleanAttribute,
+  Directive,
+  input,
+  model,
+  signal,
+} from '@angular/core';
 
 @Directive({
   exportAs: 'ngtwSwitch',

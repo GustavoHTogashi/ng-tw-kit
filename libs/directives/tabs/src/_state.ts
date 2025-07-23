@@ -1,14 +1,28 @@
-import { computed, inject, InjectionToken, linkedSignal, Provider, signal, WritableSignal } from '@angular/core';
-import { consumeState, CreationState } from '@ngtw-kit/common/di';
+import {
+  computed,
+  inject,
+  InjectionToken,
+  linkedSignal,
+  Provider,
+  signal,
+  WritableSignal,
+} from '@angular/core';
+import { consumeState, CreationState } from '@ngtw-kit/common/core';
 import { NgtwTabsState } from './_type';
 
-export const NGTW_TABS_STATE = new InjectionToken<WritableSignal<NgtwTabsState>>('ngtwTabsState');
+export const NGTW_TABS_STATE = new InjectionToken<
+  WritableSignal<NgtwTabsState>
+>('[NGTW_TABS_STATE]');
 
 export const consumeTabsState = consumeState(NGTW_TABS_STATE);
 
-export function createTabsState<Type>(newState: CreationState<Type>): NgtwTabsState {
+export function createTabsState<Type>(
+  newState: CreationState<Type>,
+): NgtwTabsState {
   const internalState = inject(NGTW_TABS_STATE, { optional: true });
-  if (!internalState) throw new Error(`${NGTW_TABS_STATE.toString()} was not provided`);
+  if (!internalState) {
+    throw new Error(`${NGTW_TABS_STATE.toString()} was not provided`);
+  }
 
   const enabledTabs = computed(() =>
     internalState()
@@ -18,7 +32,9 @@ export function createTabsState<Type>(newState: CreationState<Type>): NgtwTabsSt
 
   const nextState: NgtwTabsState = {
     ...internalState(),
-    ...Object.fromEntries(Object.entries(newState).map(([k, v]) => [k, linkedSignal(() => v())])),
+    ...Object.fromEntries(
+      Object.entries(newState).map(([k, v]) => [k, linkedSignal(() => v())]),
+    ),
     enabledTabs,
     firstTab: computed(() => enabledTabs().at(0)),
     focusedTabIndex: computed(() => {
@@ -33,7 +49,9 @@ export function createTabsState<Type>(newState: CreationState<Type>): NgtwTabsSt
   return internalState();
 }
 
-export function provideTabsState(initialState?: Partial<NgtwTabsState>): Provider[] {
+export function provideTabsState(
+  initialState?: Partial<NgtwTabsState>,
+): Provider[] {
   return [
     {
       provide: NGTW_TABS_STATE,

@@ -1,17 +1,46 @@
-import { Directive } from '@angular/core';
+import { Directive, ElementRef, inject, signal } from '@angular/core';
+import { InputElementRef } from '@ngtw-kit/common/types';
 
 /**
  * Restricts input to alphanumeric characters (letters and numbers only).
  */
 @Directive({
   host: {
-    '(input)': 'onInput($event)',
+    '(compositionend)': 'onCompositionEnd()',
+    '(compositionstart)': 'composing.set(true)',
+    '(input)': 'onInput()',
+    'type': 'text',
   },
   selector: 'input[ngtwAlphanumeric]',
 })
 export class NgtwAlphanumeric {
-  onInput($event: Event) {
-    const element = $event.target as HTMLInputElement;
-    element.value = element.value.replace(/[^0-9A-Za-zÀ-ÖØ-öø-ÿ]+/g, '');
+  private readonly _alphanumericRegex = /^[\d\s\p{L}\p{M}]+$/u;
+
+  private readonly _element = inject<InputElementRef>(ElementRef).nativeElement;
+
+  protected readonly composing = signal(false);
+
+  private _sanitizeValue(): string {
+    return Array.from(this._element.value)
+      .filter((char) => this._alphanumericRegex.test(char))
+      .join('');
+  }
+
+  private _changeNativeValue(value: string) {
+    if (this._element.value !== value) {
+      const cursor = this._element.selectionStart || this._element.value.length;
+      this._element.value = value;
+      this._element.setSelectionRange(cursor - 1, cursor - 1);
+    }
+  }
+
+  protected onCompositionEnd() {
+    this.composing.set(false);
+    this._changeNativeValue(this._sanitizeValue());
+  }
+
+  protected onInput() {
+    if (this.composing()) return;
+    this._changeNativeValue(this._sanitizeValue());
   }
 }

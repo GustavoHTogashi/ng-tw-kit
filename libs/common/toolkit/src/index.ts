@@ -1,13 +1,7 @@
-export const memoize = <Args, Result>(fn: (...args: Args[]) => Result) => {
-  const cache = new Map();
+export * from './debounce';
+export * from './first';
+export * from './groupby';
+export * from './last';
+export * from './memoize';
+export * from './throttle';
 
-  return (...args: Args[]) => {
-    const key = `key-${args.join('-')}`;
-
-    if (cache.has(key)) return cache.get(key);
-
-    const result = fn && fn(...args);
-    cache.set(key, result);
-    return result;
-  };
-};

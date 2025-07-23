@@ -27,7 +27,9 @@ export function createState<State, SignalType>(token: StateToken<State>) {
 
     const nextState: State = {
       ...internalState(),
-      ...Object.fromEntries(Object.entries(newState).map(([key, value]) => [key, linkedSignal(() => value())])),
+      ...Object.fromEntries(
+        Object.entries(newState).map(([k, v]) => [k, linkedSignal(() => v())]),
+      ),
     };
 
     internalState.set(nextState);
@@ -47,8 +49,4 @@ export function consumeState<State>(token: StateToken<State>) {
     if (!state) throw new Error(`${token.toString()} was not provided`);
     return state();
   };
-}
-
-function test() {
-  
 }
