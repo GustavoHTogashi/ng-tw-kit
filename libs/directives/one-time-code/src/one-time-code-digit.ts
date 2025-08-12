@@ -1,6 +1,6 @@
 import { computed, Directive, ElementRef, inject, signal } from '@angular/core';
 import { InputElementRef } from '@ngtw-kit/common/types';
-import { consumeOneTimeCodeState } from './_state';
+import { OneTimeCodeState } from './_state';
 import { NgtwAlphanumeric } from '@ngtw-kit/directives/alphanumeric';
 
 @Directive({
@@ -13,7 +13,7 @@ import { NgtwAlphanumeric } from '@ngtw-kit/directives/alphanumeric';
     '[class]': 'hostClass()',
     '[attr.disabled]': 'state.disabled() ? "" : null',
     '[tabIndex]': 'isFocused() ? 0 : -1',
-    '[value]': 'value()',
+    '[value]': 'digitValue()',
     'maxLength': '1',
   },
   hostDirectives: [NgtwAlphanumeric],
@@ -22,14 +22,14 @@ import { NgtwAlphanumeric } from '@ngtw-kit/directives/alphanumeric';
 export class NgtwOneTimeCodeDigit {
   readonly element = inject<InputElementRef>(ElementRef).nativeElement;
 
-  protected readonly state = consumeOneTimeCodeState();
+  protected readonly state = OneTimeCodeState.consume();
 
   protected readonly arialabel = computed(() => `Digit ${this.index() + 1}`);
   protected readonly index = computed(() => this.state.digits().indexOf(this));
   protected readonly isFocused = computed(
     () => this.state.focusedDigit() === this,
   );
-  protected readonly value = computed(
+  protected readonly digitValue = computed(
     () => this.state.value()[this.index()] || '',
   );
 

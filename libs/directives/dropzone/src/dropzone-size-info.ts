@@ -8,7 +8,7 @@ import {
   signal,
 } from '@angular/core';
 import { HTMLElementRef } from '@ngtw-kit/common/types';
-import { consumeDropzoneState } from './_state';
+import { DropzoneState } from './_state';
 import { NgtwDropzoneUnit } from './_type';
 
 const BYTE = Math.pow(1024, 0); // 1
@@ -37,7 +37,7 @@ export class NgtwDropzoneSizeInfo {
   readonly element = inject<HTMLElementRef>(ElementRef).nativeElement;
   readonly renderer = inject(Renderer2);
 
-  protected readonly state = consumeDropzoneState();
+  protected readonly state = DropzoneState.consume();
 
   protected readonly hostClass = signal(
     'text-2xs text-end font-semibold text-zinc-600',

@@ -1,37 +1,59 @@
 {
-  "name": "components",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/components/src",
+  "name": "components",
   "prefix": "ngtw",
   "projectType": "library",
   "release": {
+    "sourceRoot": "libs/components/src",
     "version": {
-      "manifestRootsToUpdate": ["dist/{projectRoot}"],
       "currentVersionResolver": "git-tag",
-      "fallbackCurrentVersionResolver": "disk"
+      "fallbackCurrentVersionResolver": "disk",
+      "manifestRootsToUpdate": ["dist/{projectRoot}"]
     }
   },
   "tags": [],
   "targets": {
     "build": {
+      "configurations": {
+        "development": {
+          "tsConfig": "libs/components/tsconfig.lib.json"
+        },
+        "production": {
+          "tsConfig": "libs/components/tsconfig.lib.prod.json"
+        }
+      },
+      "defaultConfiguration": "development",
       "executor": "@nx/angular:package",
-      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "metadata": {
+        "description": "Builds the components library for production or development."
+      },
       "options": {
         "project": "libs/components/ng-package.json"
       },
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"]
+    },
+    "build-library": {
       "configurations": {
-        "production": {
-          "tsConfig": "libs/components/tsconfig.lib.prod.json"
-        },
         "development": {
-          "tsConfig": "libs/components/tsconfig.lib.json",
-          "watch": true
+          "args": ["--configuration=development", "--watch=true"],
+          "parallel": true
+        },
+        "production": {
+          "args": ["--configuration=production"],
+          "parallel": false
         }
       },
-      "defaultConfiguration": "development"
+      "defaultConfiguration": "production",
+      "executor": "nx:run-commands",
+      "metadata": {
+        "description": "Builds the components library for production."
+      },
+      "options": {
+        "commands": ["nx run components:tailwind", "nx run components:build"]
+      }
     },
     "tailwind": {
-      "command": "npx @tailwindcss/cli -i {projectRoot}/styles/input.css -o {projectRoot}/styles/components.css",
+      "command": "npx @tailwindcss/cli -i {projectRoot}/_styles/input.css -o {projectRoot}/_styles/components.css",
       "configurations": {
         "production": {
           "args": ["--minify"]
@@ -40,7 +62,10 @@
           "args": ["--watch"]
         }
       },
-      "defaultConfiguration": "development"
+      "defaultConfiguration": "development",
+      "metadata": {
+        "description": "Generates Tailwind CSS styles for the components library."
+      }
     },
     "nx-release-publish": {
       "options": {

@@ -1,52 +1,59 @@
 import {
+  computed,
   inject,
   InjectionToken,
-  InputSignal,
-  InputSignalWithTransform,
   linkedSignal,
-  Provider,
   signal,
-  Signal,
-  WritableSignal,
 } from '@angular/core';
 
-export type StateToken<State> = InjectionToken<WritableSignal<State>>;
+type AllowedSignal<T = unknown> =
+  | ReturnType<typeof signal<T>>
+  | ReturnType<typeof linkedSignal<T>>
+  | ReturnType<typeof computed<T>>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  | ((...args: any[]) => any);
 
-export type CreationState<SignalType> = Record<
-  string,
-  | InputSignal<SignalType>
-  | InputSignalWithTransform<SignalType, never>
-  | Signal<SignalType>
-  | WritableSignal<SignalType>
->;
+type StateShape = Record<string, AllowedSignal>;
 
-export function createState<State, SignalType>(token: StateToken<State>) {
-  return function (newState: CreationState<SignalType>): WritableSignal<State> {
-    const internalState = inject(token, { optional: true });
-    if (!internalState) throw new Error(`${token.toString()} was not provided`);
-
-    const nextState: State = {
-      ...internalState(),
-      ...Object.fromEntries(
-        Object.entries(newState).map(([k, v]) => [k, linkedSignal(() => v())]),
-      ),
-    };
-
-    internalState.set(nextState);
-    return internalState;
+type StateManager<T extends StateShape> = {
+  token: InjectionToken<T>;
+  provide(factory?: Partial<T> | (() => Partial<T>)): {
+    provide: InjectionToken<T>;
+    useValue: T;
   };
-}
+  create(factory: Partial<T> | (() => Partial<T>)): T;
+  consume(): T;
+};
 
-export function provideState<State>(token: StateToken<State>) {
-  return function (initialState: State = {} as State): Provider[] {
-    return [{ provide: token, useFactory: () => signal<State>(initialState) }];
-  };
-}
+export function createStateManager<T extends StateShape>(
+  description: string,
+  defaults: () => T,
+): StateManager<T> {
+  const token = new InjectionToken<T>(description);
 
-export function consumeState<State>(token: StateToken<State>) {
-  return function (): State {
-    const state = inject(token, { optional: true });
-    if (!state) throw new Error(`${token.toString()} was not provided`);
-    return state();
-  };
+  function provide(factory?: Partial<T> | (() => Partial<T>)) {
+    const base = defaults();
+    if (factory) {
+      const partial = typeof factory === 'function' ? factory() : factory;
+      for (const [key, value] of Object.entries(partial)) {
+        Object.defineProperty(base, key, { value });
+      }
+    }
+    return { provide: token, useValue: base };
+  }
+
+  function create(factory: Partial<T> | (() => Partial<T>)): T {
+    const state = inject(token);
+    const partial = typeof factory === 'function' ? factory() : factory;
+    for (const [key, value] of Object.entries(partial)) {
+      Object.defineProperty(state, key, { value });
+    }
+    return state;
+  }
+
+  function consume(): T {
+    return inject(token);
+  }
+
+  return { token, provide, create, consume };
 }

@@ -1,27 +1,26 @@
 import { Route } from '@angular/router';
 import { addAppNamePrefix, captitalize } from './utils/string';
 
-const directives = [
-  'alphabetic',
-  'alphanumeric',
-  'button',
-  'currency',
-  'date',
-  'dropzone',
-  'input',
-  'label',
-  'numeric',
-  'one-time-code',
-  'progress',
-  'separator',
-  'slider',
-  'switch',
-  'tabs',
-  'textarea',
-  'toggle',
+const directories = [
+  'components_progress',
+  'directives_alphabetic',
+  'directives_alphanumeric',
+  'directives_button',
+  'directives_currency',
+  'directives_date',
+  'directives_dropzone',
+  'directives_input',
+  'directives_label',
+  'directives_numeric',
+  'directives_one-time-code',
+  'directives_progress',
+  'directives_separator',
+  'directives_slider',
+  'directives_switch',
+  'directives_tabs',
+  'directives_textarea',
+  'directives_toggle',
 ];
-
-// const common = ['core', 'di', 'tokens', 'toolkit', 'type-guards', 'types'];
 
 type AppRoute = Route & {
   data?: {
@@ -40,18 +39,15 @@ export const appRoutes: AppRoute[] = [
     loadComponent: () => import('./pages/home'),
     title: addAppNamePrefix('Home'),
   },
-  // ...common.map((path) => ({
-  //   data: { tag: 'common' },
-  //   loadComponent: () => import(`./pages/common/${path}`),
-  //   path,
-  //   title: addAppNamePrefix(captitalize(path)),
-  // })),
-  ...directives.map((path) => ({
-    data: { tag: 'Directives' },
-    loadComponent: () => import(`./pages/directives/${path}`),
-    path,
-    title: addAppNamePrefix(captitalize(path)),
-  })),
+  ...directories.map((path) => {
+    const [directory, page] = path.split('_');
+    return {
+      data: { tag: captitalize(directory) },
+      loadComponent: () => import(`./pages/${directory}/${page}`),
+      path,
+      title: addAppNamePrefix(captitalize(path.replace(`${directory}_`, ''))),
+    };
+  }),
   {
     path: '**',
     pathMatch: 'full',

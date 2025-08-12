@@ -3,12 +3,12 @@ import {
   computed,
   Directive,
   input,
+  linkedSignal,
   output,
   signal,
 } from '@angular/core';
 import { mimeTypeAttributes } from '@ngtw-kit/common/core';
-import { createDropzoneState, provideDropzoneState } from './_state';
-import { coerceStringArray } from '@angular/cdk/coercion'
+import { DropzoneState } from './_state';
 
 @Directive({
   exportAs: 'ngtwDropzone',
@@ -21,7 +21,7 @@ import { coerceStringArray } from '@angular/cdk/coercion'
     'aria-dropeffect': 'copy',
     'aria-label': 'Drop files here',
   },
-  providers: [provideDropzoneState()],
+  providers: [DropzoneState.provide()],
   selector: '[ngtwDropzone]',
 })
 export class NgtwDropzone {
@@ -46,20 +46,19 @@ export class NgtwDropzone {
   over = signal(false);
 
   files = signal<File[]>([]);
-  usedMaxSize = computed(() => {
-    return this.files().reduce((total, { size }) => total + size, 0);
-  });
 
-  protected readonly state = createDropzoneState({
-    accept: this.accept,
-    fileSize: this.fileSize,
-    maxSize: this.maxSize,
-    multiple: this.multiple,
-    usedSize: this.usedMaxSize,
+  protected readonly state = DropzoneState.create({
+    accept: linkedSignal(() => this.accept()),
+    fileSize: linkedSignal(() => this.fileSize()),
+    maxSize: linkedSignal(() => this.maxSize()),
+    multiple: linkedSignal(() => this.multiple()),
+    usedSize: computed(() => {
+      return this.files().reduce((total, { size }) => total + size, 0);
+    }),
   });
 
   protected readonly hostClass = signal(
-    'relative flex flex-col gap-1 bg-zinc-800 p-1 outline-transparent transition-colors before:absolute before:inset-0 before:flex before:items-center before:justify-center before:bg-zinc-800 before:text-2xs before:text-zinc-500 before:content-none data-[ngtw-dropzone-over]:bg-zinc-800/50 data-[ngtw-dropzone-over]:outline-2 data-[ngtw-dropzone-over]:-outline-offset-2 data-[ngtw-dropzone-over]:outline-zinc-800 data-[ngtw-dropzone-over]:outline-dashed data-[ngtw-dropzone-over]:before:content-["Drop_files_here"]',
+    'before:text-2xs relative flex flex-col gap-1 bg-zinc-800 p-1 outline-transparent transition-colors before:absolute before:inset-0 before:flex before:items-center before:justify-center before:bg-zinc-800 before:text-zinc-500 before:content-none data-[ngtw-dropzone-over]:bg-zinc-800/50 data-[ngtw-dropzone-over]:outline-2 data-[ngtw-dropzone-over]:-outline-offset-2 data-[ngtw-dropzone-over]:outline-zinc-800 data-[ngtw-dropzone-over]:outline-dashed data-[ngtw-dropzone-over]:before:content-["Drop_files_here"]',
   );
 
   private matchFile(file: File): boolean {

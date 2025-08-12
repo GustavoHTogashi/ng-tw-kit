@@ -7,7 +7,7 @@ import {
   Renderer2,
   signal,
 } from '@angular/core';
-import { consumeDropzoneState } from './_state';
+import { DropzoneState } from './_state';
 import { HTMLElementRef } from '@ngtw-kit/common/types';
 
 @Directive({
@@ -22,7 +22,7 @@ export class NgtwDropzoneAcceptInfo {
   readonly element = inject<HTMLElementRef>(ElementRef).nativeElement;
   readonly renderer = inject(Renderer2);
 
-  protected readonly state = consumeDropzoneState();
+  protected readonly state = DropzoneState.consume();
 
   protected readonly hostClass = signal(
     'text-2xs text-end font-bold text-zinc-600',

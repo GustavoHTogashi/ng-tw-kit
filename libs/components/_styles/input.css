@@ -1,0 +1,15 @@
+@layer base {
+  ngtw-progress {
+    @apply bg-zinc-800;
+    > [ngtwProgressThumb] {
+      @apply bg-zinc-200;
+    }
+  }
+}
+
+@import 'tailwindcss';
+
+@theme {
+  --tw-duration: 0.25s;
+  --tw-ease: cubic-bezier(0.4, 0, 0.2, 1);
+}

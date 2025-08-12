@@ -17,7 +17,7 @@ export type NgtwTabsState = {
   lastTab: Signal<NgtwTab | undefined>;
   orientation: WritableSignal<NgtwTabsOrientation>;
   selectedTab: WritableSignal<NgtwTab | undefined>;
-  tabs: WritableSignal<NgtwTab[]>;
+  tabs: Signal<NgtwTab[]>;
 };
 
 export type NgtwTabpanelTemplateContent = {

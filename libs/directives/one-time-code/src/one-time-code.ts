@@ -5,22 +5,23 @@ import {
   Directive,
   effect,
   input,
+  linkedSignal,
   output,
   signal,
 } from '@angular/core';
-import { createOneTimeCodeState, provideOneTimeCodeState } from './_state';
+import { OneTimeCodeState } from './_state';
 
 @Directive({
   exportAs: 'ngtwOneTimeCode',
   host: {
-    '(keydown.arrowleft)': 'focusPreviousDigit($event)',
-    '(keydown.arrowright)': 'focusNextDigit($event)',
-    '(keydown.end)': 'focusLastDigit($event)',
-    '(keydown.home)': 'focusFirstDigit($event)',
+    '(keydown.arrowleft.prevent)': 'focusPreviousDigit()',
+    '(keydown.arrowright.prevent)': 'focusNextDigit()',
+    '(keydown.end.prevent)': 'focusLastDigit()',
+    '(keydown.home.prevent)': 'focusFirstDigit()',
     '[attr.data-filled]': 'state.isComplete() ? "" : null',
     '[class]': 'hostClass()',
   },
-  providers: [provideOneTimeCodeState()],
+  providers: [OneTimeCodeState.provide()],
   selector: '[ngtwOneTimeCode]',
 })
 export class NgtwOneTimeCode implements AfterViewInit {
@@ -29,11 +30,22 @@ export class NgtwOneTimeCode implements AfterViewInit {
     transform: booleanAttribute,
   });
 
-  protected readonly state = createOneTimeCodeState({
-    disabled: this.disabled,
+  protected readonly state = OneTimeCodeState.create({
+    disabled: linkedSignal(() => this.disabled()),
+    isComplete: computed(
+      () => this.state.value().length === this.state.digits().length,
+    ),
+    isEmpty: computed(() => this.state.value().length === 0),
+    lastDigit: computed(
+      () => this.state.digits()[this.state.value().length - 1],
+    ),
+    firstDigit: linkedSignal(() => this.state.digits()[0]),
+    focusedDigitIndex: computed(() => {
+      const focusedDigit = this.state.focusedDigit();
+      if (!focusedDigit) return -1;
+      return this.state.digits().indexOf(focusedDigit);
+    }),
   });
-
-  protected readonly isComplete = computed(() => this.state.isComplete());
 
   protected readonly hostClass = signal('flex flex-row items-center gap-2');
 
@@ -43,43 +55,39 @@ export class NgtwOneTimeCode implements AfterViewInit {
     this.state.focusedDigit.set(this.state.firstDigit());
   }
 
-  focusPreviousDigit(event: Event) {
+  focusPreviousDigit() {
     if (this.state.isEmpty()) return;
-    event.preventDefault();
     if (this.state.focusedDigitIndex() === -1) return;
     const index =
       this.state.focusedDigitIndex() - 1 >= 0
         ? this.state.focusedDigitIndex() - 1
         : 0;
-    this.state.digits()[index]?.focus();
+    this.state.digits()[index].focus();
   }
 
-  focusNextDigit(event: Event) {
+  focusNextDigit() {
     if (this.state.isEmpty()) return;
-    event.preventDefault();
     if (this.state.focusedDigitIndex() === -1) return;
     const index =
       this.state.focusedDigitIndex() + 1 < this.state.value().length
         ? this.state.focusedDigitIndex() + 1
         : this.state.value().length;
-    this.state.digits()[index]?.focus();
+    this.state.digits()[index].focus();
   }
 
-  focusFirstDigit(event: Event) {
+  focusFirstDigit() {
     if (this.state.isEmpty()) return;
-    event.preventDefault();
     this.state.firstDigit()?.focus();
   }
 
-  focusLastDigit(event: Event) {
+  focusLastDigit() {
     if (this.state.isEmpty()) return;
-    event.preventDefault();
-    this.state.digits().at(this.state.value().length)?.focus();
+    this.state.digits()[this.state.value().length].focus();
   }
 
   constructor() {
     effect(() => {
-      if (this.isComplete()) this.complete.emit(this.state.value());
+      if (this.state.isComplete()) this.complete.emit(this.state.value());
     });
   }
 }

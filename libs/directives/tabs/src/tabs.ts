@@ -1,5 +1,10 @@
-import { computed, Directive, input } from '@angular/core';
-import { createTabsState, provideTabsState } from './_state';
+import {
+  computed,
+  Directive,
+  input,
+  linkedSignal
+} from '@angular/core';
+import { TabState } from './_state';
 import { NgtwTabsOrientation } from './_type';
 
 @Directive({
@@ -7,7 +12,7 @@ import { NgtwTabsOrientation } from './_type';
     '[class]': 'hostClass()',
     'role': 'tabs',
   },
-  providers: [provideTabsState()],
+  providers: [TabState.provide()],
   exportAs: 'ngtwTabs',
   selector: '[ngtwTabs]',
 })
@@ -16,7 +21,9 @@ export class NgtwTabs {
     alias: 'ngtwTabsOrientation',
   });
 
-  protected readonly state = createTabsState({ orientation: this.orientation });
+  protected readonly state = TabState.create({
+    orientation: linkedSignal(() => this.orientation()),
+  });
 
   protected readonly hostClass = computed(() => {
     return {

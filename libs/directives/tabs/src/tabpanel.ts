@@ -14,7 +14,7 @@ import {
   ViewContainerRef,
 } from '@angular/core';
 import { HTMLElementRef } from '@ngtw-kit/common/types';
-import { consumeTabsState } from './_state';
+import { TabState } from './_state';
 import {
   isComponentContent,
   isTemplateContent,
@@ -37,7 +37,7 @@ import {
 })
 export class NgtwTabpanel {
   readonly element = inject<HTMLElementRef>(ElementRef).nativeElement;
-  protected readonly state = consumeTabsState();
+  protected readonly state = TabState.consume();
   protected readonly viewContainerRef = inject(ViewContainerRef);
 
   content = input<NgtwTabpanelContent>(undefined, {
@@ -74,10 +74,13 @@ export class NgtwTabpanel {
 
   private _attachPortal() {
     const content = this.content();
-    if (isTemplateContent(content))
+    if (isTemplateContent(content)) {
       return this._domPortalOutlet.attach(this._createTemplate(content));
-    if (isComponentContent(content))
+    }
+    if (isComponentContent(content)) {
       return this._domPortalOutlet.attach(this._createComponent(content));
+    }
+
     return;
   }
 

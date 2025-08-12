@@ -62,6 +62,6 @@
 
 @import '@catppuccin/highlightjs/css/catppuccin-macchiato.css';
 
-/* @import '../../../dist/libs/components/components.css'; */
-
 @import '../../../dist/libs/directives/directives.css';
+
+@import '../../../dist/libs/components/components.css';

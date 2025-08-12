@@ -1,17 +1,17 @@
 import { AfterViewInit, computed, Directive } from '@angular/core';
-import { consumeTabsState } from './_state';
+import { TabState } from './_state';
 import { NgtwTabsOrientation } from './_type';
 
 @Directive({
   host: {
-    '(keydown.arrowdown)': 'focusNextTab($event, "vertical")',
-    '(keydown.arrowleft)': 'focusPreviousTab($event)',
-    '(keydown.arrowright)': 'focusNextTab($event)',
-    '(keydown.arrowup)': 'focusPreviousTab($event, "vertical")',
-    '(keydown.end)': 'focusLastTab($event)',
-    '(keydown.enter)': 'selectTab($event)',
-    '(keydown.home)': 'focusFirstTab($event)',
-    '(keydown.space)': 'selectTab($event)',
+    '(keydown.arrowdown.stop)': 'focusNextTab("vertical")',
+    '(keydown.arrowleft.stop)': 'focusPreviousTab()',
+    '(keydown.arrowright.stop)': 'focusNextTab()',
+    '(keydown.arrowup.stop)': 'focusPreviousTab("vertical")',
+    '(keydown.end.stop)': 'focusLastTab()',
+    '(keydown.enter.stop)': 'selectTab()',
+    '(keydown.home.stop)': 'focusFirstTab()',
+    '(keydown.space.stop)': 'selectTab()',
     '[attr.aria-orientation]': 'state.orientation()',
     '[class]': 'hostClass()',
     '[style.--ngtw-tab-indicator-size]': 'indicatorSize()',
@@ -24,7 +24,7 @@ import { NgtwTabsOrientation } from './_type';
   selector: '[ngtwTablist]',
 })
 export class NgtwTablist implements AfterViewInit {
-  protected readonly state = consumeTabsState();
+  protected readonly state = TabState.consume();
 
   protected readonly indicatorSize = computed(() => {
     if (this.state.orientation() === 'horizontal')
@@ -51,11 +51,7 @@ export class NgtwTablist implements AfterViewInit {
     this.state.selectedTab.set(this.state.firstTab());
   }
 
-  focusPreviousTab(
-    event: Event,
-    orientation: NgtwTabsOrientation = 'horizontal',
-  ) {
-    event.preventDefault();
+  focusPreviousTab(orientation: NgtwTabsOrientation = 'horizontal') {
     if (orientation !== this.state.orientation()) return;
     if (this.state.focusedTabIndex() === -1) return;
     const index =
@@ -64,8 +60,7 @@ export class NgtwTablist implements AfterViewInit {
     this.state.enabledTabs()[index]?.focus();
   }
 
-  focusNextTab(event: Event, orientation: NgtwTabsOrientation = 'horizontal') {
-    event.preventDefault();
+  focusNextTab(orientation: NgtwTabsOrientation = 'horizontal') {
     if (orientation !== this.state.orientation()) return;
     if (this.state.focusedTabIndex() === -1) return;
     const index =
@@ -73,18 +68,15 @@ export class NgtwTablist implements AfterViewInit {
     this.state.enabledTabs()[index]?.focus();
   }
 
-  focusFirstTab(event: Event) {
-    event.preventDefault();
+  focusFirstTab() {
     this.state.firstTab()?.focus();
   }
 
-  focusLastTab(event: Event) {
-    event.preventDefault();
+  focusLastTab() {
     this.state.lastTab()?.focus();
   }
 
-  selectTab(event?: Event) {
-    event?.preventDefault();
+  selectTab() {
     this.state.selectedTab.set(this.state.focusedTab());
   }
 }

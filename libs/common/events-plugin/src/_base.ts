@@ -26,7 +26,7 @@ export abstract class NgtwBasePlugin extends EventManagerPlugin {
 
   protected resolveNameModifiers(
     eventName: string,
-  ): [name: string, modifiers: string] {
+  ): [name: string, extra: string, modifiers: string] {
     const [name, ...rest] = eventName.split(this.separator);
     const modifiers = rest
       .filter((modifier) => {
@@ -35,6 +35,14 @@ export abstract class NgtwBasePlugin extends EventManagerPlugin {
         });
       })
       .join(this.separator);
-    return [name, modifiers];
+
+    const extra = rest
+      .filter((modifier) => {
+        return !this.validModifiers.some((validModifier) => {
+          return modifier.includes(validModifier);
+        });
+      })
+      .join(this.separator);
+    return [name, extra, modifiers];
   }
 }

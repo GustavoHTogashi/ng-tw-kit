@@ -7,7 +7,7 @@ import {
   inject,
   signal,
 } from '@angular/core';
-import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { lucideSearch } from '@ng-icons/lucide';
@@ -99,7 +99,7 @@ export class Sidemenu {
     this._document,
     'keydown',
   ).pipe(
-    takeUntilDestroyed(),
+    // takeUntilDestroyed(),
     filter((event) => event.key === 'k' && (event.metaKey || event.ctrlKey)),
     tap(() => this.handleSearch()),
   );
@@ -122,7 +122,7 @@ export class Sidemenu {
     return groupBy(
       this.sidemenuItems(),
       (item) => item.data?.['tag'] ?? 'General',
-    );
+    ).sort();
   });
 
   hash = toSignal(this._crypto.digest('sha-1', 'test').pipe(toData<string>()), {
@@ -132,8 +132,8 @@ export class Sidemenu {
   constructor() {
     this._searchEvent.subscribe();
     effect(() => {
-      console.log(this.hash())
-    })
+      console.log(this.hash());
+    });
   }
 
   protected handleSearch() {

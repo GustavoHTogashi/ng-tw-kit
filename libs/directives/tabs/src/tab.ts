@@ -7,12 +7,12 @@ import {
   signal,
 } from '@angular/core';
 import { ButtonElementRef } from '@ngtw-kit/common/types';
-import { consumeTabsState } from './_state';
+import { TabState } from './_state';
 
 @Directive({
   host: {
     '(focus)': 'state.focusedTab.set(this)',
-    '(mouseup)': 'state.selectedTab.set(this);',
+    '(click)': 'state.selectedTab.set(this);',
     '[attr.aria-controls]': 'tabpanelId()',
     '[attr.aria-selected]': 'isSelected()',
     '[attr.disabled]': 'disabled() ? "" : null',
@@ -27,7 +27,7 @@ import { consumeTabsState } from './_state';
 })
 export class NgtwTab {
   readonly element = inject<ButtonElementRef>(ElementRef).nativeElement;
-  protected readonly state = consumeTabsState();
+  protected readonly state = TabState.consume();
 
   disabled = input(false, { alias: 'ngtwTabDisabled' });
   value = input('', { alias: 'ngtwTab' });
@@ -43,7 +43,21 @@ export class NgtwTab {
   );
 
   constructor() {
-    this.state.tabs.update((tabs) => [...tabs, this]);
+    TabState.create(() => {
+      const tabs = [...this.state.tabs(), this];
+      const enabledTabs = tabs.filter(({ disabled }) => !disabled());
+      return {
+        tabs: computed(() => tabs),
+        enabledTabs: computed(() => enabledTabs),
+        firstTab: computed(() => enabledTabs[0]),
+        lastTab: computed(() => enabledTabs[enabledTabs.length - 1]),
+        focusedTabIndex: computed(() => {
+          const focusedTab = this.state.focusedTab();
+          if (!focusedTab) return -1;
+          return tabs.findIndex((tab) => tab === focusedTab);
+        }),
+      };
+    });
   }
 
   focus() {

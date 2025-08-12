@@ -23,6 +23,9 @@
       "@ngtw-kit/common/types": ["libs/common/types/src/index.ts"],
       "@ngtw-kit/common/web-apis": ["libs/common/web-apis/src/index.ts"],
       "@ngtw-kit/components": ["libs/components/src/index.ts"],
+      "@ngtw-kit/components/progress": [
+        "libs/components/progress/src/index.ts"
+      ],
       "@ngtw-kit/directives/alphabetic": [
         "libs/directives/alphabetic/src/index.ts"
       ],

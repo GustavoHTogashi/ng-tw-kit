@@ -1,20 +1,18 @@
 import { Component, OnDestroy, signal } from '@angular/core';
-import { NgtwProgress, NgtwProgressBar } from '@ngtw-kit/directives/progress';
+import { NgtwProgressComponent } from '@ngtw-kit/components/progress';
 import { Page } from '../../components';
 
 @Component({
-  imports: [Page, NgtwProgress, NgtwProgressBar],
+  imports: [Page, NgtwProgressComponent],
   selector: 'sample-progress',
   template: `
     <sample-page>
-      <div ngtwProgress [ngtwProgressValue]="progressValue()">
-        <div ngtwProgressBar></div>
-      </div>
+      <ngtw-progress [ngtwProgressValue]="progressValue()" />
     </sample-page>
   `,
 })
 export default class Progress implements OnDestroy {
-  protected readonly progressValue = signal(33);
+  protected readonly progressValue = signal(20);
 
   interval: number;
 
@@ -26,6 +24,5 @@ export default class Progress implements OnDestroy {
 
   ngOnDestroy() {
     clearInterval(this.interval);
-    return;
   }
 }

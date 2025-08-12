@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-function-type */
+import { Provider } from '@angular/core';
 import { EVENT_MANAGER_PLUGINS } from '@angular/platform-browser';
-import { Log } from '@ngtw-kit/common/core';
 import { debounce, throttle } from '@ngtw-kit/common/toolkit';
 import { NgtwBasePlugin } from './_base';
 import {
@@ -10,7 +10,6 @@ import {
   NGTW_EVENTS_PLUGIN_VALID_MODIFIERS,
 } from './_data';
 import { NgtwEventsPluginConfig } from './_type';
-import { Provider } from '@angular/core';
 
 export function provideNgtwEventsPlugin(
   config?: NgtwEventsPluginConfig,
@@ -89,16 +88,17 @@ class NgtwEventsPlugin extends NgtwBasePlugin {
     handler: Function,
   ): Function {
     // Given the eventName, resolve the name of the event and modifiers applied to it
-    const [name, modifiers] = this.resolveNameModifiers(eventName);
-
-    Log.info('EVENTS_PLUGIN:', `Event: ${eventName}, Modifiers: ${modifiers}`);
+    const [name, extra, modifiers] = this.resolveNameModifiers(eventName);
 
     // Wrap the handler to apply modifiers like debounce, throttle, prevent, etc.
     const wrappedHandler = this._wrapHandler(modifiers, handler);
 
+    const nameWithExtra = extra ? name + this.separator + extra : name;
+    // Log.info('EVENTS_PLUGIN:', `Event: ${nameWithExtra}, Modifiers: ${modifiers}`);
+
     const removeEventListener = this.manager.addEventListener(
       element,
-      name,
+      nameWithExtra,
       wrappedHandler,
       {
         capture: modifiers.includes('capture'),
