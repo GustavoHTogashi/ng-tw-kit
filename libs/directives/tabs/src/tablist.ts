@@ -3,6 +3,7 @@ import { TabState } from './_state';
 import { NgtwTabsOrientation } from './_type';
 
 @Directive({
+  exportAs: 'ngtwTablist',
   host: {
     '(keydown.arrowdown.stop)': 'focusNextTab("vertical")',
     '(keydown.arrowleft.stop)': 'focusPreviousTab()',
@@ -12,15 +13,14 @@ import { NgtwTabsOrientation } from './_type';
     '(keydown.enter.stop)': 'selectTab()',
     '(keydown.home.stop)': 'focusFirstTab()',
     '(keydown.space.stop)': 'selectTab()',
+    '[attr.aria-label]': '"Tabs"',
+    '[attr.aria-multiselectable]': 'false',
     '[attr.aria-orientation]': 'state.orientation()',
+    '[attr.role]': '"tablist"',
     '[class]': 'hostClass()',
     '[style.--ngtw-tab-indicator-size]': 'indicatorSize()',
     '[style.--ngtw-tab-indicator-translate]': 'indicatorTranslate()',
-    'aria-label': 'Tabs',
-    'aria-multiselectable': 'false',
-    'role': 'tablist',
   },
-  exportAs: 'ngtwTablist',
   selector: '[ngtwTablist]',
 })
 export class NgtwTablist implements AfterViewInit {

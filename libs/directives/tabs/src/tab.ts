@@ -6,7 +6,7 @@ import {
   input,
   signal,
 } from '@angular/core';
-import { ButtonElementRef } from '@ngtw-kit/common/types';
+import { ButtonRef } from '@ngtw-kit/common/types';
 import { TabState } from './_state';
 
 @Directive({
@@ -26,7 +26,7 @@ import { TabState } from './_state';
   selector: 'button[ngtwTab]',
 })
 export class NgtwTab {
-  readonly element = inject<ButtonElementRef>(ElementRef).nativeElement;
+  readonly element = inject<ButtonRef>(ElementRef).nativeElement;
   protected readonly state = TabState.consume();
 
   disabled = input(false, { alias: 'ngtwTabDisabled' });

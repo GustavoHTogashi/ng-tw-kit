@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { debounce } from './debounce';
 
-describe('debounce', () => {
+describe('toolkit:debounce', () => {
   let fn: ReturnType<typeof vi.fn>;
   let debouncedFn: (...args: unknown[]) => void;
 

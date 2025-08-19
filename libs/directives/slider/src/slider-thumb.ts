@@ -1,7 +1,7 @@
 import { CdkDrag, DragRef, Point } from '@angular/cdk/drag-drop';
 import { computed, Directive, ElementRef, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { DivElementRef } from '@ngtw-kit/common/types';
+import { DivRef } from '@ngtw-kit/common/types';
 import { tap, throttleTime } from 'rxjs';
 import { SliderState } from './_state';
 
@@ -16,7 +16,7 @@ import { SliderState } from './_state';
   selector: '[ngtwSliderThumb]',
 })
 export class NgtwSliderThumb {
-  readonly element = inject<DivElementRef>(ElementRef).nativeElement;
+  readonly element = inject<DivRef>(ElementRef).nativeElement;
 
   protected readonly state = SliderState.consume();
 

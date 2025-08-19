@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { groupBy } from './groupby';
 
-describe('groupBy', () => {
+describe('toolkit:groupBy', () => {
   it('should group items by a primitive key', () => {
     const data = [
       { type: 'a', value: 1 },

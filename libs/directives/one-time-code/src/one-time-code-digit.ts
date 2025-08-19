@@ -1,5 +1,5 @@
 import { computed, Directive, ElementRef, inject, signal } from '@angular/core';
-import { InputElementRef } from '@ngtw-kit/common/types';
+import { InputRef } from '@ngtw-kit/common/types';
 import { OneTimeCodeState } from './_state';
 import { NgtwAlphanumeric } from '@ngtw-kit/directives/alphanumeric';
 
@@ -20,7 +20,7 @@ import { NgtwAlphanumeric } from '@ngtw-kit/directives/alphanumeric';
   selector: 'input[ngtwOneTimeCodeDigit]',
 })
 export class NgtwOneTimeCodeDigit {
-  readonly element = inject<InputElementRef>(ElementRef).nativeElement;
+  readonly element = inject<InputRef>(ElementRef).nativeElement;
 
   protected readonly state = OneTimeCodeState.consume();
 

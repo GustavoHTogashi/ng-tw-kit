@@ -13,7 +13,7 @@ import {
   signal,
   ViewContainerRef,
 } from '@angular/core';
-import { HTMLElementRef } from '@ngtw-kit/common/types';
+import { ElRef } from '@ngtw-kit/common/types';
 import { TabState } from './_state';
 import {
   isComponentContent,
@@ -36,7 +36,7 @@ import {
   selector: '[ngtwTabpanel]',
 })
 export class NgtwTabpanel {
-  readonly element = inject<HTMLElementRef>(ElementRef).nativeElement;
+  readonly element = inject<ElRef>(ElementRef).nativeElement;
   protected readonly state = TabState.consume();
   protected readonly viewContainerRef = inject(ViewContainerRef);
 

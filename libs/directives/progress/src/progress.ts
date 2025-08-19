@@ -7,7 +7,7 @@ import {
   linkedSignal
 } from '@angular/core';
 import { unsignedNumberAttribute } from '@ngtw-kit/common/core';
-import { HTMLElementRef } from '@ngtw-kit/common/types';
+import { ElRef } from '@ngtw-kit/common/types';
 import { ProgressState } from './_state';
 
 @Directive({
@@ -18,7 +18,7 @@ import { ProgressState } from './_state';
   selector: '[ngtwProgress]',
 })
 export class NgtwProgress implements AfterViewInit {
-  element = inject<HTMLElementRef>(ElementRef).nativeElement;
+  element = inject<ElRef>(ElementRef).nativeElement;
 
   max = input(100, {
     alias: 'ngtwProgressMax',

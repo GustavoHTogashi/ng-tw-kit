@@ -7,7 +7,7 @@ import {
   Renderer2,
   signal,
 } from '@angular/core';
-import { HTMLElementRef } from '@ngtw-kit/common/types';
+import { ElRef } from '@ngtw-kit/common/types';
 import { DropzoneState } from './_state';
 import { NgtwDropzoneUnit } from './_type';
 
@@ -34,7 +34,7 @@ const Units: Record<NgtwDropzoneUnit, number> = {
   selector: '[ngtwDropzoneSizeInfo]',
 })
 export class NgtwDropzoneSizeInfo {
-  readonly element = inject<HTMLElementRef>(ElementRef).nativeElement;
+  readonly element = inject<ElRef>(ElementRef).nativeElement;
   readonly renderer = inject(Renderer2);
 
   protected readonly state = DropzoneState.consume();

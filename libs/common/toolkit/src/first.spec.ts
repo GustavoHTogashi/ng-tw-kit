@@ -1,6 +1,6 @@
 import { first } from './first';
 
-describe('first', () => {
+describe('toolkit:first', () => {
   it('should return the first item of a non-empty array', () => {
     const result = first([1, 2, 3]);
     expect(result).toBe(1);

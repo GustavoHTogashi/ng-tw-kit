@@ -7,7 +7,8 @@ import {
   input,
   signal,
 } from '@angular/core';
-import { InputElementRef } from '@ngtw-kit/common/types';
+import { unsignedNumberAttribute } from '@ngtw-kit/common/core';
+import { InputRef } from '@ngtw-kit/common/types';
 
 /**
  * Directive to handle numeric input.
@@ -22,14 +23,22 @@ import { InputElementRef } from '@ngtw-kit/common/types';
   selector: 'input[ngtwNumeric]',
 })
 export class NgtwNumeric {
-  private readonly _element = inject<InputElementRef>(ElementRef).nativeElement;
+  readonly element = inject<InputRef>(ElementRef).nativeElement;
 
   allowNegative = input(true, {
     alias: 'ngtwNumericAllowNegative',
     transform: booleanAttribute,
   });
-  decimalDigits = input(2, { alias: 'ngtwNumericDecimalDigits' });
-  integerDigits = input(16, { alias: 'ngtwNumericIntegerDigits' });
+
+  decimalDigits = input(2, {
+    alias: 'ngtwNumericDecimalDigits',
+    transform: unsignedNumberAttribute,
+  });
+
+  integerDigits = input(16, {
+    alias: 'ngtwNumericIntegerDigits',
+    transform: unsignedNumberAttribute,
+  });
 
   private readonly _previousValue = signal('');
 
@@ -42,17 +51,17 @@ export class NgtwNumeric {
   });
 
   private _resetInputValue() {
-    this._element.value = '';
+    this.element.value = '';
     this._previousValue.set('');
   }
 
   private _changeInputValue(value: string) {
-    this._element.value = value;
+    this.element.value = value;
     this._previousValue.set(value);
   }
 
   onBlur() {
-    const { value } = this._element;
+    const { value } = this.element;
     const decimalDigits = this.decimalDigits();
 
     if (value === '' || value === '-') return this._resetInputValue();
@@ -74,11 +83,11 @@ export class NgtwNumeric {
   }
 
   onInput() {
-    if (!this._regex().test(this._element.value)) {
-      this._element.value = this._previousValue();
+    if (!this._regex().test(this.element.value)) {
+      this.element.value = this._previousValue();
       return;
     }
-    this._previousValue.set(this._element.value);
+    this._previousValue.set(this.element.value);
     return;
   }
 }

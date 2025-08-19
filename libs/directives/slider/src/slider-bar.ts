@@ -1,6 +1,6 @@
 import { computed, Directive, ElementRef, inject } from '@angular/core';
 import { SliderState } from './_state';
-import { HTMLElementRef } from '@ngtw-kit/common/types';
+import { ElRef } from '@ngtw-kit/common/types';
 
 @Directive({
   host: {
@@ -12,7 +12,7 @@ import { HTMLElementRef } from '@ngtw-kit/common/types';
   selector: '[ngtwSliderBar]',
 })
 export class NgtwSliderBar {
-  readonly element = inject<HTMLElementRef>(ElementRef).nativeElement;
+  readonly element = inject<ElRef>(ElementRef).nativeElement;
 
   protected readonly state = SliderState.consume();
 

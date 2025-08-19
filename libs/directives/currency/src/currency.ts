@@ -6,7 +6,7 @@ import {
   input,
 } from '@angular/core';
 import { NGTW_NAVIGATOR } from '@ngtw-kit/common/web-apis';
-import { InputElementRef } from '@ngtw-kit/common/types';
+import { InputRef } from '@ngtw-kit/common/types';
 import { NgtwNumeric } from '@ngtw-kit/directives/numeric';
 
 @Directive({
@@ -28,7 +28,7 @@ import { NgtwNumeric } from '@ngtw-kit/directives/numeric';
   selector: 'input[ngtwCurrency]',
 })
 export class NgtwCurrency {
-  private readonly _element = inject<InputElementRef>(ElementRef).nativeElement;
+  private readonly _element = inject<InputRef>(ElementRef).nativeElement;
   private readonly _navigator = inject(NGTW_NAVIGATOR);
 
   private readonly numeric = inject(NgtwNumeric);

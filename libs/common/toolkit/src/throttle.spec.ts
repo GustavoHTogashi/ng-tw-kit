@@ -2,7 +2,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { throttle } from './throttle';
 
-describe('throttle', () => {
+describe('toolkit:throttle', () => {
     it('should call the function immediately and then throttle subsequent calls', () => {
         const fn = vi.fn();
         const throttled = throttle(fn, 100);

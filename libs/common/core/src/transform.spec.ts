@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { unsignedNumberAttribute, mimeTypeAttributes } from './transform';
 
-describe('unsignedNumberAttribute', () => {
+describe('core:transform:unsignedNumberAttribute', () => {
   it('should return positive number as is', () => {
     expect(unsignedNumberAttribute(5)).toBe(5);
   });
@@ -24,7 +24,7 @@ describe('unsignedNumberAttribute', () => {
   });
 });
 
-describe('mimeTypeAttributes', () => {
+describe('core:transform:mimeTypeAttributes', () => {
   it('should handle comma-separated string of mime types', () => {
     expect(mimeTypeAttributes('image/png, text/html')).toBe('image/png,text/html');
   });

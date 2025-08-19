@@ -1,5 +1,5 @@
 import { computed, Directive, ElementRef, inject } from '@angular/core';
-import { HTMLElementRef } from '@ngtw-kit/common/types';
+import { ElRef } from '@ngtw-kit/common/types';
 import { ProgressState } from './_state';
 
 @Directive({
@@ -16,7 +16,7 @@ import { ProgressState } from './_state';
   selector: '[ngtwProgressBar]',
 })
 export class NgtwProgressBar {
-  readonly nativeElement = inject<HTMLElementRef>(ElementRef).nativeElement;
+  readonly nativeElement = inject<ElRef>(ElementRef).nativeElement;
 
   protected readonly state = ProgressState.consume();
 

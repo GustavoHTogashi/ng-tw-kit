@@ -1,5 +1,5 @@
 import { Directive, ElementRef, inject, signal } from '@angular/core';
-import { InputElementRef } from '@ngtw-kit/common/types';
+import { InputRef } from '@ngtw-kit/common/types';
 
 /**
  * Restricts input to alphabetic characters (letters only).
@@ -16,7 +16,7 @@ import { InputElementRef } from '@ngtw-kit/common/types';
 export class NgtwAlphabetic {
   private readonly _alphabeticRegex = /^[\s\p{L}\p{M}]+$/u;
 
-  private readonly _element = inject<InputElementRef>(ElementRef).nativeElement;
+  private readonly _element = inject<InputRef>(ElementRef).nativeElement;
 
   protected readonly composing = signal(false);
 

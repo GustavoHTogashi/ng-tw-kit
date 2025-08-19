@@ -2,7 +2,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { memoize } from './memoize';
 
-describe('memoize', () => {
+describe('toolkit:memoize', () => {
     it('should return the same result for the same arguments', () => {
         const fn = vi.fn((a: number, b: number) => a + b);
         const memoized = memoize(fn);

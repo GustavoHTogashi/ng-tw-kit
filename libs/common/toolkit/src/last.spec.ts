@@ -1,6 +1,6 @@
 import { last } from './last';
 
-describe('last', () => { 
+describe('toolkit:last', () => { 
   it('should return the last item of a non-empty array', () => {
     const result = last([1, 2, 3]);
     expect(result).toBe(3);

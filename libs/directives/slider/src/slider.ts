@@ -9,7 +9,7 @@ import {
   model
 } from '@angular/core';
 import { unsignedNumberAttribute } from '@ngtw-kit/common/core';
-import { HTMLElementRef } from '@ngtw-kit/common/types';
+import { ElRef } from '@ngtw-kit/common/types';
 import { SliderState } from './_state';
 
 @Directive({
@@ -21,7 +21,7 @@ import { SliderState } from './_state';
   selector: '[ngtwSlider]',
 })
 export class NgtwSlider implements AfterViewInit {
-  readonly element = inject<HTMLElementRef>(ElementRef).nativeElement;
+  readonly element = inject<ElRef>(ElementRef).nativeElement;
 
   max = input(100, {
     alias: 'ngtwSliderMax',

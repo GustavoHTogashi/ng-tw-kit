@@ -10,6 +10,7 @@ import {
   NGTW_EVENTS_PLUGIN_VALID_MODIFIERS,
 } from './_data';
 import { NgtwEventsPluginConfig } from './_type';
+import { Log } from '@ngtw-kit/common/core';
 
 export function provideNgtwEventsPlugin(
   config?: NgtwEventsPluginConfig,
@@ -94,7 +95,7 @@ class NgtwEventsPlugin extends NgtwBasePlugin {
     const wrappedHandler = this._wrapHandler(modifiers, handler);
 
     const nameWithExtra = extra ? name + this.separator + extra : name;
-    // Log.info('EVENTS_PLUGIN:', `Event: ${nameWithExtra}, Modifiers: ${modifiers}`);
+    Log.info('EVENTS_PLUGIN:', `Event: ${nameWithExtra}, Modifiers: ${modifiers}`);
 
     const removeEventListener = this.manager.addEventListener(
       element,

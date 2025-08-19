@@ -8,7 +8,7 @@ import {
   signal,
 } from '@angular/core';
 import { DropzoneState } from './_state';
-import { HTMLElementRef } from '@ngtw-kit/common/types';
+import { ElRef } from '@ngtw-kit/common/types';
 
 @Directive({
   exportAs: 'ngtwDropzoneAcceptInfo',
@@ -19,7 +19,7 @@ import { HTMLElementRef } from '@ngtw-kit/common/types';
   selector: '[ngtwDropzoneAcceptInfo]',
 })
 export class NgtwDropzoneAcceptInfo {
-  readonly element = inject<HTMLElementRef>(ElementRef).nativeElement;
+  readonly element = inject<ElRef>(ElementRef).nativeElement;
   readonly renderer = inject(Renderer2);
 
   protected readonly state = DropzoneState.consume();

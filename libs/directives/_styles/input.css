@@ -1,6 +1,9 @@
 @layer base {
-  input {
-    @apply bg-zinc-800;
+  [type='text'] {
+    @apply text-zinc-950;
+  }
+  [ngtwDate] {
+    @apply selection:bg-purple-500/50
   }
   [ngtwProgress],
   [aria-label='Progress'] {
@@ -41,7 +44,6 @@
 
 @theme {
   --tw-duration: 0.25s;
-  --tw-ease: cubic-bezier(0.4, 0, 0.2, 1);
 
   --animate-progress-indeterminate: progress-indeterminate 1.5s infinite
     ease-in-out;
