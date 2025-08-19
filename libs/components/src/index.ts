@@ -1,1 +1,1 @@
-export * from './outlet';
+export default null;

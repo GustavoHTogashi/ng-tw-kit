@@ -1,46 +1,71 @@
 {
-  "name": "directives",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/directives/src",
+  "name": "directives",
   "prefix": "ngtw",
   "projectType": "library",
   "release": {
+    "sourceRoot": "libs/directives/src",
     "version": {
-      "manifestRootsToUpdate": ["dist/{projectRoot}"],
       "currentVersionResolver": "git-tag",
-      "fallbackCurrentVersionResolver": "disk"
+      "fallbackCurrentVersionResolver": "disk",
+      "manifestRootsToUpdate": ["dist/{projectRoot}"]
     }
   },
   "tags": [],
   "targets": {
     "build": {
+      "configurations": {
+        "development": {
+          "tsConfig": "libs/directives/tsconfig.lib.json"
+        },
+        "production": {
+          "tsConfig": "libs/directives/tsconfig.lib.prod.json"
+        }
+      },
+      "defaultConfiguration": "production",
       "executor": "@nx/angular:package",
-      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "metadata": {
+        "description": "Builds the directives library for production or development."
+      },
       "options": {
         "project": "libs/directives/ng-package.json"
       },
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"]
+    },
+    "build-library": {
       "configurations": {
-        "production": {
-          "tsConfig": "libs/directives/tsconfig.lib.prod.json"
-        },
         "development": {
-          "tsConfig": "libs/directives/tsconfig.lib.json",
-          "watch": true
+          "args": ["--configuration=development", "--watch=true"],
+          "parallel": true
+        },
+        "production": {
+          "args": ["--configuration=production"],
+          "parallel": false
         }
       },
-      "defaultConfiguration": "development"
+      "defaultConfiguration": "production",
+      "executor": "nx:run-commands",
+      "metadata": {
+        "description": "Builds the directives library for production."
+      },
+      "options": {
+        "commands": ["nx run directives:tailwind", "nx run directives:build"]
+      }
     },
-    "tailwind": { 
+    "tailwind": {
       "command": "npx @tailwindcss/cli -i {projectRoot}/_styles/input.css -o {projectRoot}/_styles/directives.css",
       "configurations": {
+        "development": {
+          "args": []
+        },
         "production": {
           "args": ["--minify"]
-        },
-        "development": {
-          "args": ["--watch"]
         }
       },
-      "defaultConfiguration": "development"
+      "defaultConfiguration": "production",
+      "metadata": {
+        "description": "Generates Tailwind CSS styles for the directives library."
+      }
     },
     "nx-release-publish": {
       "options": {

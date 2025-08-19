@@ -1,30 +1,57 @@
 import { ElementRef } from '@angular/core';
 
-export type AnchorElementRef = ElementRef<HTMLAnchorElement>;
-export type ArticleElementRef = ElementRef<HTMLElement>;
-export type AsideElementRef = ElementRef<HTMLElement>;
-export type AudioElementRef = ElementRef<HTMLAudioElement>;
-export type ButtonElementRef = ElementRef<HTMLButtonElement>;
-export type CanvasElementRef = ElementRef<HTMLCanvasElement>;
-export type DialogElementRef = ElementRef<HTMLDialogElement>;
-export type DivElementRef = ElementRef<HTMLDivElement>;
-export type FooterElementRef = ElementRef<HTMLElement>;
-export type FormElementRef = ElementRef<HTMLFormElement>;
-export type HeaderElementRef = ElementRef<HTMLElement>;
-export type HeadingElementRef = ElementRef<HTMLHeadingElement>;
-export type HTMLElementRef = ElementRef<HTMLElement>;
-export type ImageElementRef = ElementRef<HTMLImageElement>;
-export type InputElementRef = ElementRef<HTMLInputElement>;
-export type LinkElementRef = ElementRef<HTMLLinkElement>;
-export type ListElementRef = ElementRef<HTMLUListElement | HTMLOListElement>;
-export type ListItemElementRef = ElementRef<HTMLLIElement>;
-export type MainElementRef = ElementRef<HTMLElement>;
-export type NavElementRef = ElementRef<HTMLElement>;
-export type ParagraphElementRef = ElementRef<HTMLParagraphElement>;
-export type SectionElementRef = ElementRef<HTMLElement>;
-export type SelectElementRef = ElementRef<HTMLSelectElement>;
-export type SpanElementRef = ElementRef<HTMLSpanElement>;
-export type SVGElementRef = ElementRef<SVGElement>;
-export type TableElementRef = ElementRef<HTMLTableElement>;
-export type TextareaElementRef = ElementRef<HTMLTextAreaElement>;
-export type VideoElementRef = ElementRef<HTMLVideoElement>;
+export type AnchorRef = ElementRef<HTMLAnchorElement>;
+
+export type ArticleRef = ElementRef<HTMLElement>;
+
+export type AsideRef = ElementRef<HTMLElement>;
+
+export type AudioRef = ElementRef<HTMLAudioElement>;
+
+export type ButtonRef = ElementRef<HTMLButtonElement>;
+
+export type CanvasRef = ElementRef<HTMLCanvasElement>;
+
+export type DialogRef = ElementRef<HTMLDialogElement>;
+
+export type DivRef = ElementRef<HTMLDivElement>;
+
+export type FooterRef = ElementRef<HTMLElement>;
+
+export type FormRef = ElementRef<HTMLFormElement>;
+
+export type HeaderRef = ElementRef<HTMLElement>;
+
+export type HeadingRef = ElementRef<HTMLHeadingElement>;
+
+export type ElRef = ElementRef<HTMLElement>;
+
+export type ImageRef = ElementRef<HTMLImageElement>;
+
+export type InputRef = ElementRef<HTMLInputElement>;
+
+export type LinkRef = ElementRef<HTMLLinkElement>;
+
+export type ListRef = ElementRef<HTMLUListElement | HTMLOListElement>;
+
+export type ListItemRef = ElementRef<HTMLLIElement>;
+
+export type MainRef = ElementRef<HTMLElement>;
+
+export type NavRef = ElementRef<HTMLElement>;
+
+export type ParagraphRef = ElementRef<HTMLParagraphElement>;
+
+export type SectionRef = ElementRef<HTMLElement>;
+
+export type SelectRef = ElementRef<HTMLSelectElement>;
+
+export type SpanRef = ElementRef<HTMLSpanElement>;
+
+export type SVGRef = ElementRef<SVGElement>;
+
+export type TableRef = ElementRef<HTMLTableElement>;
+
+export type TextareaRef = ElementRef<HTMLTextAreaElement>;
+
+export type VideoRef = ElementRef<HTMLVideoElement>;

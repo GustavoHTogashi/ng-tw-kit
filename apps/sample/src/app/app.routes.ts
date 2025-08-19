@@ -1,55 +1,53 @@
 import { Route } from '@angular/router';
-import { memoize } from '@ngtw-kit/utils/toolkit';
+import { addAppNamePrefix, captitalize } from './utils/string';
 
-export const appName = 'Ngtw Kit';
+const directories = [
+  'components_progress',
+  'directives_alphabetic',
+  'directives_alphanumeric',
+  'directives_button',
+  'directives_currency',
+  'directives_date',
+  'directives_dropzone',
+  'directives_input',
+  'directives_label',
+  'directives_numeric',
+  'directives_one-time-code',
+  'directives_progress',
+  'directives_separator',
+  'directives_slider',
+  'directives_switch',
+  'directives_tabs',
+  'directives_textarea',
+  'directives_toggle',
+];
 
-const _routeTitle = (title: string): string => (title ? `${appName} ${title}` : appName);
-const routeTitle = memoize(_routeTitle);
+type AppRoute = Route & {
+  data?: {
+    tag: string;
+  };
+};
 
-const _stripAppName = (title: string): string => title.replace(`${appName}`, '').trim();
-export const stripAppName = memoize(_stripAppName);
-
-export const appRoutes: Route[] = [
+export const appRoutes: AppRoute[] = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'test',
+    redirectTo: 'home',
   },
   {
-    loadComponent: () => import('./pages/test'),
-    path: 'test',
-    title: routeTitle('Test'),
-  },
-  {
-    loadComponent: () => import('./pages/home'),
     path: 'home',
-    title: routeTitle('Home'),
+    loadComponent: () => import('./pages/home'),
+    title: addAppNamePrefix('Home'),
   },
-  {
-    loadComponent: () => import('./pages/button'),
-    path: 'button',
-    title: routeTitle('Button'),
-  },
-  {
-    loadComponent: () => import('./pages/input'),
-    path: 'input',
-    title: routeTitle('Input'),
-  },
-  {
-    loadComponent: () => import('./pages/progress'),
-    path: 'progress',
-    title: routeTitle('Progress'),
-  },
-  {
-    loadComponent: () => import('./pages/switch'),
-    path: 'switch',
-    title: routeTitle('Switch'),
-  },
-  {
-    loadComponent: () => import('./pages/tabs'),
-    path: 'tabs',
-    title: routeTitle('Tabs'),
-  },
+  ...directories.map((path) => {
+    const [directory, page] = path.split('_');
+    return {
+      data: { tag: captitalize(directory) },
+      loadComponent: () => import(`./pages/${directory}/${page}`),
+      path,
+      title: addAppNamePrefix(captitalize(path.replace(`${directory}_`, ''))),
+    };
+  }),
   {
     path: '**',
     pathMatch: 'full',

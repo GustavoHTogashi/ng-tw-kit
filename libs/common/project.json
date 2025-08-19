@@ -14,20 +14,20 @@
   "tags": [],
   "targets": {
     "build": {
+      "configurations": {
+        "development": {
+          "tsConfig": "libs/common/tsconfig.lib.json"
+        },
+        "production": {
+          "tsConfig": "libs/common/tsconfig.lib.prod.json"
+        }
+      },
+      "defaultConfiguration": "production",
       "executor": "@nx/angular:package",
-      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
       "options": {
         "project": "libs/common/ng-package.json"
       },
-      "configurations": {
-        "production": {
-          "tsConfig": "libs/common/tsconfig.lib.prod.json"
-        },
-        "development": {
-          "tsConfig": "libs/common/tsconfig.lib.json"
-        }
-      },
-      "defaultConfiguration": "development"
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"]
     },
     "nx-release-publish": {
       "options": {

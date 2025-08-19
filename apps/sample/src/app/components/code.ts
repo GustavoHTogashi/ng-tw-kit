@@ -2,9 +2,12 @@ import { NgClass } from '@angular/common';
 import { Component, inject, input, signal } from '@angular/core';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { lucideCopy } from '@ng-icons/lucide';
-import { NGTW_CLIPBOARD } from '@ngtw-kit/common/tokens';
-import hljs from 'highlight.js';
-hljs.highlightAll();
+import { NGTW_CLIPBOARD } from '@ngtw-kit/common/web-apis';
+import hljs from 'highlight.js/lib/core';
+import bash from 'highlight.js/lib/languages/bash';
+import typescript from 'highlight.js/lib/languages/typescript';
+hljs.registerLanguage('bash', bash);
+hljs.registerLanguage('typescript', typescript);
 
 @Component({
   host: {

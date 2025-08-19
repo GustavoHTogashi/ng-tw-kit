@@ -1,57 +1,45 @@
 import {
-  computed,
+  AfterViewInit,
   Directive,
   ElementRef,
   inject,
   input,
-  numberAttribute,
-  signal,
+  linkedSignal
 } from '@angular/core';
-import { HTMLElementRef } from '@ngtw-kit/common/types';
+import { unsignedNumberAttribute } from '@ngtw-kit/common/core';
+import { ElRef } from '@ngtw-kit/common/types';
+import { ProgressState } from './_state';
 
 @Directive({
   host: {
-    '[attr.aria-valuemax]': 'max()',
-    '[attr.aria-valuemin]': 'min()',
-    '[attr.aria-valuenow]': 'currentValue()',
-    '[class]': 'hostClass()',
-    '[style.--ngtw-progress]': 'progress()',
-    role: 'progressbar',
+    '[attr.aria-label]': '"Progress"',
   },
+  providers: [ProgressState.provide()],
   selector: '[ngtwProgress]',
 })
-export class NgtwProgress {
-  protected readonly hostClass = signal(
-    'relative block h-4 w-full overflow-hidden rounded-full bg-zinc-800 after:absolute after:inset-0 after:w-(--ngtw-progress) after:bg-zinc-300 after:transition-[width] after:will-change-[width]',
-  );
+export class NgtwProgress implements AfterViewInit {
+  element = inject<ElRef>(ElementRef).nativeElement;
 
-  private readonly _defaultMin = 0;
-  private readonly _defaultMax = 100;
-
-  nativeElement = inject<HTMLElementRef>(ElementRef).nativeElement;
-
-  max = input(this._defaultMax, {
+  max = input(100, {
     alias: 'ngtwProgressMax',
-    transform: numberAttribute,
+    transform: unsignedNumberAttribute,
   });
-  min = input(this._defaultMin, {
+  min = input(0, {
     alias: 'ngtwProgressMin',
-    transform: numberAttribute,
+    transform: unsignedNumberAttribute,
   });
-  value = input(this._defaultMin, {
+  value = input(0, {
     alias: 'ngtwProgressValue',
-    transform: numberAttribute,
+    transform: unsignedNumberAttribute,
   });
 
-  currentValue = computed(() => {
-    const val = this.value();
-    if (val < this._defaultMin) return this._defaultMin;
-    if (val > this._defaultMax) return this._defaultMax;
-    return val;
+  state = ProgressState.create({
+    value: linkedSignal(() => this.value()),
+    min: linkedSignal(() => this.min()),
+    max: linkedSignal(() => this.max()),
   });
 
-  progress = computed(() => {
-    const multiplier = this.currentValue() / this._defaultMax;
-    return `${multiplier * this.nativeElement.offsetWidth}px`;
-  });
+  ngAfterViewInit() {
+    this.state.progressRect.set(this.element.getBoundingClientRect());
+  }
 }

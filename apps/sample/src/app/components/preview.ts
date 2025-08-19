@@ -7,7 +7,9 @@ import { Component } from '@angular/core';
   },
   selector: 'sample-preview',
   template: `
-    <header class="flex flex-row items-center justify-between text-zinc-500 p-2">
+    <header
+      class="flex flex-row items-center justify-between p-2 text-zinc-500"
+    >
       <span class="flex flex-row items-center gap-2">
         <span class="h-3 w-3 rounded-full bg-red-400"></span>
         <span class="h-3 w-3 rounded-full bg-yellow-400"></span>
@@ -18,7 +20,7 @@ import { Component } from '@angular/core';
       </small>
     </header>
     <div
-      class="max-h-96 overflow-auto scrollbar-track-zinc-900 rounded-lg bg-zinc-900 px-8 py-4 text-sm"
+      class="scrollbar-track-zinc-900 max-h-96 overflow-auto rounded-lg bg-zinc-900 px-8 py-4 text-sm"
     >
       <ng-content />
     </div>

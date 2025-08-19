@@ -1,11 +1,19 @@
-import { InjectionToken, WritableSignal } from '@angular/core';
-import { NgtwTabsetState } from './_type';
-import { createState, provideState } from '@ngtw-kit/common/di';
+import { computed, signal } from '@angular/core';
+import { createStateManager } from '@ngtw-kit/common/core';
+import { NgtwTabsState } from './_type';
 
-export const NGTW_TABS_STATE = new InjectionToken<
-  WritableSignal<NgtwTabsetState>
->('ngtwTabsState');
-
-export const provideTabsetState = provideState(NGTW_TABS_STATE);
-
-export const createTabsetState = createState(NGTW_TABS_STATE);
+export const TabState = createStateManager<NgtwTabsState>(
+  'NGTW_TABS_STATE',
+  () => {
+    return {
+      enabledTabs: computed(() => []),
+      firstTab: computed(() => undefined),
+      focusedTab: signal(undefined),
+      focusedTabIndex: signal(-1),
+      lastTab: computed(() => undefined),
+      orientation: signal('horizontal'),
+      selectedTab: signal(undefined),
+      tabs: computed(() => []),
+    };
+  },
+);

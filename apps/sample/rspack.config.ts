@@ -18,9 +18,6 @@ export default createConfig(
         },
       ],
       styles: ['./src/styles.css'],
-      devServer: {
-        port: 10000,
-      },
     },
   },
   {
@@ -46,11 +43,11 @@ export default createConfig(
     development: {
       options: {
         optimization: false,
-        vendorChunk: true,
         extractLicenses: false,
-        sourceMap: true,
         namedChunks: true,
-        devServer: {},
+        devServer: {
+          port: 10000,
+        },
       },
     },
   },
